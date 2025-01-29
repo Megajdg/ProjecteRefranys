@@ -159,11 +159,31 @@ public class ProgrammingTarnished_Refranys {
     }
     
     /**
-     * Mostra el nombre d'encerts i d'errors en la partida
-     * @param primeres 
+     * Comproba si la resposta introduida per l'usuari és correcta
+     * @param primeres
+     * @param segones
+     * @param aux
+     * @param resposta
      */
-    public static void mostraResultats(ArrayList<PrimeraMeitat> primeres){
+
+    public static void comprobaEncerts (ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int aux, int resposta) {
+        if (primeres.get(aux).nrOrdre2aPart == segones.get(resposta).idSMeitat) {
+            System.out.printf("Correcte!");
+            sumaEncerts();
+        }
+        else System.out.printf("Incorrecte");
+    }
+    
+    /**
+     * Mostra el nombre d'encerts i d'errors en la partida
+     * @param numEncerts
+     */
+    public static void mostraResultats(int numEncerts){
+
         //Codi mètode
+        String nomJugador = "1";
+        int numErrors = NR_REFRANYS - numEncerts;
+        System.out.printf("Jugador %s:\nEncerts: %d\nErrors: %d",  nomJugador, numEncerts, numErrors);
     }
     
     public static void main(String[] args) {
@@ -177,6 +197,6 @@ public class ProgrammingTarnished_Refranys {
         ordreSegones(segones);
         mostraMeitats(primeres, segones);
         demanaJugada(primeres, segones);
-        mostraResultats(primeres);
+        
     }    
 }
