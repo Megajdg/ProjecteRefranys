@@ -127,7 +127,21 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void demanaJugada(PrimeraMeitat[] primeres, SegonaMeitat[] segones){
         //Codi mètode
-        mostraResultats(numEncerts);
+    }
+    
+    /**
+     * Comproba si la resposta introduida per l'usuari és correcta
+     * @param primeres
+     * @param segones
+     * @param aux
+     * @param resposta
+     */
+    public static void comprobaEncerts (ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int aux, int resposta) {
+        if (primeres.get(aux).nrOrdre2aPart == segones.get(resposta).idSMeitat) {
+            System.out.printf("Correcte!");
+            sumaEncerts ();
+        }
+        else System.out.printf("Incorrecte");
     }
     
     /**
