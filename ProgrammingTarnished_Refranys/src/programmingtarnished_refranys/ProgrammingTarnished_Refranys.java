@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Scanner;
+import java.util.Random;
+import java.util.ArrayList;
 
 class PrimeraMeitat{
     //Identificador de la primera meitat
@@ -31,7 +33,7 @@ public class ProgrammingTarnished_Refranys {
      * Introdueix informació en el vector d'objectes de pimeres meitats
      * @param primeres vector d'objectes de primeres meitats
      */
-    public static void omplePrimeres(PrimeraMeitat[] primeres){
+    public static void omplePrimeres(ArrayList<PrimeraMeitat> primeres){
         
         for(int i = 0; i < NR_REFRANYS; i++){
             primeres[i] = new PrimeraMeitat();
@@ -62,7 +64,7 @@ public class ProgrammingTarnished_Refranys {
      * Introdueix informació en el vector d'objectes de segones meitats
      * @param segones vector d'objetes de segones meitats
      */
-    public static void ompleSegones(SegonaMeitat[] segones){
+    public static void ompleSegones(ArrayList<SegonaMeitat> segones){
         
         for(int i = 0; i < NR_REFRANYS; i++){
             segones[i] = new SegonaMeitat();
@@ -96,8 +98,35 @@ public class ProgrammingTarnished_Refranys {
      * cada execució del programa.
      * @param segones vector d'objectes de segones meitats
      */
-    public static void ordreSegones(SegonaMeitat[] segones){
-       //Codi mètode
+    public static void ordreSegones(ArrayList<SegonaMeitat> segones){
+        //Codi mètode
+        Random rand = new Random();
+        /* 
+        En aquesta seccio del codi generem un arraylist per conservar les posicions
+        aleatories i aixi prevenir que es generin posicions ja cambiades.
+        Després dins del for ens assegurem que no hi hagin 4 valors per a que no es quedi
+        generant un nombre aleatori.
+        Després intercanviem els valors entre sí.
+        */
+        ArrayList<Integer> posicionsRepetides = new ArrayList<>(); 
+        Integer posicioRandom;
+        int foo_segona;
+        for (int i = 0; i < segones.size(); i++) {
+            posicioRandom = rand.nextInt(5);
+            if (posicionsRepetides.size() != 4) {
+                if ((posicionsRepetides.contains(posicioRandom) == false)) {
+                    // intercambiem els valors de la posicio actual i la generada aleatoriament
+                    foo_segona = segones.get(i).idSMeitat;
+                    segones.get(i).idSMeitat = segones.get(posicioRandom).idSMeitat;
+                    segones.get(posicioRandom).idSMeitat = foo_segona;
+                    posicionsRepetides.add(posicioRandom);
+                    posicionsRepetides.add(i);
+                } else {
+                    i--;
+                }
+            }
+        }
+       
     }
 
     /**
@@ -106,7 +135,7 @@ public class ProgrammingTarnished_Refranys {
      * cada execució del programa.
      * @param segones vector d'objectes de segones meitats
      */
-    public static void ordrePrimeres(PrimeraMeitat[] segones){
+    public static void ordrePrimeres(ArrayList<SegonaMeitat> segones){
        //Codi mètode
     }
     
@@ -116,7 +145,7 @@ public class ProgrammingTarnished_Refranys {
      * @param primeres 
      * @param segones 
      */
-    public static void mostraMeitats(PrimeraMeitat[] primeres, SegonaMeitat[] segones){
+    public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
         //Codi mètode
     }
     
@@ -128,7 +157,6 @@ public class ProgrammingTarnished_Refranys {
      * @param segones
      */
     public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
-        Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
 
         for (int i = 0; i < NR_REFRANYS; i++) { //Bucle para ir introduciendo cada una de las respuesta
   
@@ -150,10 +178,11 @@ public class ProgrammingTarnished_Refranys {
      * @param aux
      * @param resposta
      */
+
     public static void comprobaEncerts (ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int aux, int resposta) {
         if (primeres.get(aux).nrOrdre2aPart == segones.get(resposta).idSMeitat) {
             System.out.printf("Correcte!");
-            sumaEncerts ();
+            sumaEncerts();
         }
         else System.out.printf("Incorrecte");
     }
@@ -163,6 +192,7 @@ public class ProgrammingTarnished_Refranys {
      * @param numEncerts
      */
     public static void mostraResultats(int numEncerts){
+
         //Codi mètode
         String nomJugador = "1";
         int numErrors = NR_REFRANYS - numEncerts;
@@ -171,8 +201,8 @@ public class ProgrammingTarnished_Refranys {
     
     public static void main(String[] args) {
         
-        PrimeraMeitat[] primeres = new PrimeraMeitat[NR_REFRANYS];
-        SegonaMeitat[] segones = new SegonaMeitat[NR_REFRANYS];
+        ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
+        ArrayList<SegonaMeitat> segones = new ArrayList<>();
         
         omplePrimeres(primeres);
         ompleSegones(segones);
