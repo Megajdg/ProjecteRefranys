@@ -127,14 +127,18 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void demanaJugada(PrimeraMeitat[] primeres, SegonaMeitat[] segones){
         //Codi mètode
+        mostraResultats(numEncerts);
     }
     
     /**
      * Mostra el nombre d'encerts i d'errors en la partida
-     * @param primeres 
+     * @param numEncerts
      */
-    public static void mostraResultats(PrimeraMeitat[] primeres){
+    public static void mostraResultats(int numEncerts){
         //Codi mètode
+        String nomJugador = "1";
+        int numErrors = NR_REFRANYS - numEncerts;
+        System.out.printf("Jugador %s:\nEncerts: %d\nErrors: %d",  nomJugador, numEncerts, numErrors);
     }
     
     public static void main(String[] args) {
@@ -148,6 +152,6 @@ public class ProgrammingTarnished_Refranys {
         ordreSegones(segones);
         mostraMeitats(primeres, segones);
         demanaJugada(primeres, segones);
-        mostraResultats(primeres);
+        
     }    
 }
