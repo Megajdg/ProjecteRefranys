@@ -26,7 +26,8 @@ class SegonaMeitat{
  * @author S. González
  */
 public class ProgrammingTarnished_Refranys {
-    final public static int NR_REFRANYS = 5;
+    final public static int NR_REFRANYS = 5;   
+    public Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
     
     /**
      * Introdueix informació en el vector d'objectes de pimeres meitats
@@ -179,9 +180,21 @@ public class ProgrammingTarnished_Refranys {
      * numeració que apareix en pantalla), que corresponen a les 
      * primeres meitats (que es mostraran també en ordre aleatori)
      * @param primeres 
+     * @param segones
      */
     public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
-        //Codi mètode
+
+        for (int i = 0; i < NR_REFRANYS; i++) { //Bucle para ir introduciendo cada una de las respuesta
+  
+            int respuesta = -1; //Esta variable es para guardar la respuesta del usuario en cada bucle
+            while (respuesta < 1 || respuesta > NR_REFRANYS) { 
+                respuesta = scanner.nextInt();
+            } //Este while es para asegurarse que el usuario da una respuesta dentro del rango
+
+            // Guardamos la respuesta del usuario
+            primeres.get(i).respostaUsuari = respuesta - 1; // Restamos 1 porque los índices en el ArrayList empiezan desde 0
+            System.out.println(); // Espacio para separar las jugadas
+        }
     }
     
     /**
