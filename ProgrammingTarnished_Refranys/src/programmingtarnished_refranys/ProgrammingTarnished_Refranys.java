@@ -27,7 +27,7 @@ class SegonaMeitat{
  */
 public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;   
-    public Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
+    public static Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
     
     /**
      * Introdueix informació en el vector d'objectes de pimeres meitats
