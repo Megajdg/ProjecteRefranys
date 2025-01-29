@@ -125,7 +125,6 @@ public class ProgrammingTarnished_Refranys {
                 }
             }
         }
-       
     }
 
     /**
@@ -134,8 +133,35 @@ public class ProgrammingTarnished_Refranys {
      * cada execució del programa.
      * @param segones vector d'objectes de segones meitats
      */
-    public static void ordrePrimeres(ArrayList<SegonaMeitat> segones){
+    public static void ordrePrimeres(ArrayList<PrimeraMeitat> primeres){
        //Codi mètode
+       //Codi mètode
+        Random rand = new Random();
+        /* 
+        En aquesta seccio del codi generem un arraylist per conservar les posicions
+        aleatories i aixi prevenir que es generin posicions ja cambiades.
+        Després dins del for ens assegurem que no hi hagin 4 valors per a que no es quedi
+        generant un nombre aleatori.
+        Després intercanviem els valors entre sí.
+        */
+        ArrayList<Integer> posicionsRepetides = new ArrayList<>(); 
+        Integer posicioRandom;
+        int foo_primera;
+        for (int i = 0; i < primeres.size(); i++) {
+            posicioRandom = rand.nextInt(5);
+            if (posicionsRepetides.size() != 4) {
+                if ((posicionsRepetides.contains(posicioRandom) == false)) {
+                    // intercambiem els valors de la posicio actual i la generada aleatoriament
+                    foo_primera = primeres.get(i).idPMeitat;
+                    primeres.get(i).idPMeitat = primeres.get(posicioRandom).idPMeitat;
+                    primeres.get(posicioRandom).idPMeitat = foo_primera;
+                    posicionsRepetides.add(posicioRandom);
+                    posicionsRepetides.add(i);
+                } else {
+                    i--;
+                }
+            }
+        }
     }
     
     /**
