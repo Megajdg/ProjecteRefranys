@@ -1,12 +1,11 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 class PrimeraMeitat{
     //Identificador de la primera meitat
     int idPMeitat;
     //Identificador de la segona meitat que li correspon
     int nrOrdre2aPart;
-    //Resposta que dona l'usuari per emparellar meitats en cada execuciÃ³
+    //Resposta que dona l'usuari per emparellar meitats en cada execució
     int respostaUsuari;
     //Text de la primera meitat
     String primeraMeitat;
@@ -15,20 +14,20 @@ class PrimeraMeitat{
 class SegonaMeitat{
     //Identificador de la segona meitat
     int idSMeitat;
-    //Nr d'ordre aleatori que s'assigna en cada execuciÃ³
+    //Nr d'ordre aleatori que s'assigna en cada execució
     int nrOrdreAleatori;
     //Text de la segona meitat
     String segonaMeitat;
 }
 /**
  *
- * @author S. GonzÃ¡lez
+ * @author S. González
  */
-public class ProjecteRefranys {
+public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;
     
     /**
-     * Introdueix informaciÃ³ en el vector d'objectes de pimeres meitats
+     * Introdueix informació en el vector d'objectes de pimeres meitats
      * @param primeres vector d'objectes de primeres meitats
      */
     public static void omplePrimeres(PrimeraMeitat[] primeres){
@@ -51,7 +50,7 @@ public class ProjecteRefranys {
         
         primeres[3].idPMeitat = 3;
         primeres[3].nrOrdre2aPart = 3;
-        primeres[3].primeraMeitat = "Tal farÃ s,";
+        primeres[3].primeraMeitat = "Tal faràs,";
         
         primeres[4].idPMeitat = 4;
         primeres[4].nrOrdre2aPart = 4;
@@ -59,7 +58,7 @@ public class ProjecteRefranys {
     }
     
     /**
-     * Introdueix informaciÃ³ en el vector d'objectes de segones meitats
+     * Introdueix informació en el vector d'objectes de segones meitats
      * @param segones vector d'objetes de segones meitats
      */
     public static void ompleSegones(SegonaMeitat[] segones){
@@ -82,7 +81,7 @@ public class ProjecteRefranys {
         
         segones[3].idSMeitat = 3;
         segones[3].nrOrdreAleatori = 3;
-        segones[3].segonaMeitat = "tal trobarÃ s.";
+        segones[3].segonaMeitat = "tal trobaràs.";
         
         segones[4].idSMeitat = 4;
         segones[4].nrOrdreAleatori = 4;
@@ -92,22 +91,22 @@ public class ProjecteRefranys {
     
     /**
      * Asigna ordre aleatori a les segones meitats per mostrar-les
-     * a continuaciÃ³ a l'usuari; aquesta acciÃ³ s'haurÃ  de repetir en
-     * cada execuciÃ³ del programa.
+     * a continuació a l'usuari; aquesta acció s'haurà de repetir en
+     * cada execució del programa.
      * @param segones vector d'objectes de segones meitats
      */
     public static void ordreSegones(SegonaMeitat[] segones){
-       //Codi mÃ¨tode
+       //Codi mètode
     }
 
     /**
      * Asigna ordre aleatori a les primeres meitats per mostrar-les
-     * a continuaciÃ³ a l'usuari; aquesta acciÃ³ s'haurÃ  de repetir en
-     * cada execuciÃ³ del programa.
+     * a continuació a l'usuari; aquesta acció s'haurà de repetir en
+     * cada execució del programa.
      * @param segones vector d'objectes de segones meitats
      */
     public static void ordrePrimeres(PrimeraMeitat[] segones){
-       //Codi mÃ¨tode
+       //Codi mètode
     }
     
     /**
@@ -117,17 +116,17 @@ public class ProjecteRefranys {
      * @param segones 
      */
     public static void mostraMeitats(PrimeraMeitat[] primeres, SegonaMeitat[] segones){
-        //Codi mÃ¨tode
+        //Codi mètode
     }
     
     /**
      * Demana a l'usuari que indiqui les segones meitats (segons la 
-     * numeraciÃ³ que apareix en pantalla), que corresponen a les 
-     * primeres meitats (que es mostraran tambÃ© en ordre aleatori)
+     * numeració que apareix en pantalla), que corresponen a les 
+     * primeres meitats (que es mostraran també en ordre aleatori)
      * @param primeres 
      */
     public static void demanaJugada(PrimeraMeitat[] primeres, SegonaMeitat[] segones){
-        //Codi mÃ¨tode
+        //Codi mètode
     }
     
     /**
@@ -135,7 +134,7 @@ public class ProjecteRefranys {
      * @param primeres 
      */
     public static void mostraResultats(PrimeraMeitat[] primeres){
-        //Codi mÃ¨tode
+        //Codi mètode
     }
     
     public static void main(String[] args) {
