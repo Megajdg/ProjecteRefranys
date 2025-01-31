@@ -35,29 +35,25 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void omplePrimeres(ArrayList<PrimeraMeitat> primeres){
         
-        for(int i = 0; i < NR_REFRANYS; i++){
-            primeres[i] = new PrimeraMeitat();
-        }
+        primeres.get(0).idPMeitat = 0;
+        primeres.get(0).nrOrdre2aPart = 0;
+        primeres.get(0).primeraMeitat = "Qui no vulgui pols";
         
-        primeres[0].idPMeitat = 0;
-        primeres[0].nrOrdre2aPart = 0;
-        primeres[0].primeraMeitat = "Qui no vulgui pols";        
+        primeres.get(1).idPMeitat = 1;
+        primeres.get(1).nrOrdre2aPart = 1;
+        primeres.get(1).primeraMeitat = "No diguis blat";
         
-        primeres[1].idPMeitat = 1;
-        primeres[1].nrOrdre2aPart = 1;
-        primeres[1].primeraMeitat = "No diguis blat";
+        primeres.get(2).idPMeitat = 2;
+        primeres.get(2).nrOrdre2aPart = 2;
+        primeres.get(2).primeraMeitat = "A la taula i al llit";
         
-        primeres[2].idPMeitat = 2;
-        primeres[2].nrOrdre2aPart = 2;
-        primeres[2].primeraMeitat = "A la taula i al llit";
+        primeres.get(3).idPMeitat = 3;
+        primeres.get(3).nrOrdre2aPart = 3;
+        primeres.get(3).primeraMeitat = "Tal faràs,";
         
-        primeres[3].idPMeitat = 3;
-        primeres[3].nrOrdre2aPart = 3;
-        primeres[3].primeraMeitat = "Tal faràs,";
-        
-        primeres[4].idPMeitat = 4;
-        primeres[4].nrOrdre2aPart = 4;
-        primeres[4].primeraMeitat = "Qui dia passa,";
+        primeres.get(4).idPMeitat = 4;
+        primeres.get(4).nrOrdre2aPart = 4;
+        primeres.get(4).primeraMeitat = "Qui dia passa,";
     }
     
     /**
@@ -66,29 +62,27 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void ompleSegones(ArrayList<SegonaMeitat> segones){
         
-        for(int i = 0; i < NR_REFRANYS; i++){
-            segones[i] = new SegonaMeitat();
-        }
         
-        segones[0].idSMeitat = 0;
-        segones[0].nrOrdreAleatori = 0;
-        segones[0].segonaMeitat = "que no vagi a l'era";        
+        segones.get(0).idSMeitat = 0;
+        segones.get(0).nrOrdreAleatori = 0;
+        segones.get(0).segonaMeitat = "que no vagi a l'era";
         
-        segones[1].idSMeitat = 1;
-        segones[1].nrOrdreAleatori = 1;
-        segones[1].segonaMeitat = "fins que no el tinguis al sac i ben lligat.";
+        segones.get(1).idSMeitat = 1;
+        segones.get(1).nrOrdreAleatori = 1;
+        segones.get(1).segonaMeitat = "fins que no el tinguis al sac i ben lligat.";
         
-        segones[2].idSMeitat = 2;
-        segones[2].nrOrdreAleatori = 2;
-        segones[2].segonaMeitat = "al primer crit.";
+        segones.get(2).idSMeitat = 2;
+        segones.get(2).nrOrdreAleatori = 2;
+        segones.get(2).segonaMeitat = "al primer crit.";
         
-        segones[3].idSMeitat = 3;
-        segones[3].nrOrdreAleatori = 3;
-        segones[3].segonaMeitat = "tal trobaràs.";
+        segones.get(3).idSMeitat = 3;
+        segones.get(3).nrOrdreAleatori = 3;
+        segones.get(3).segonaMeitat = "tal trobaràs.";
         
-        segones[4].idSMeitat = 4;
-        segones[4].nrOrdreAleatori = 4;
-        segones[4].segonaMeitat = "any empeny.";
+        segones.get(4).idSMeitat = 4;
+        segones.get(4).nrOrdreAleatori = 4;
+        segones.get(4).segonaMeitat = "any empeny.";
+     
     }
     
     
