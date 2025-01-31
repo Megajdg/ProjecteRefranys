@@ -21,19 +21,25 @@ class SegonaMeitat{
     //Text de la segona meitat
     String segonaMeitat;
 }
+
 /**
  *
  * @author S. González
  */
 public class ProgrammingTarnished_Refranys {
-    final public static int NR_REFRANYS = 5;   
+    final public static int NR_REFRANYS = 5;
     public static Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
+    public static ArrayList<Integer> encerts = new ArrayList<>();
     
     /**
      * Introdueix informació en el vector d'objectes de pimeres meitats
      * @param primeres vector d'objectes de primeres meitats
      */
     public static void omplePrimeres(ArrayList<PrimeraMeitat> primeres){
+        int i;
+        for (i = 0; i < NR_REFRANYS; i++) {
+            primeres.add(new PrimeraMeitat());
+        }
         
         primeres.get(0).idPMeitat = 0;
         primeres.get(0).nrOrdre2aPart = 0;
@@ -61,7 +67,10 @@ public class ProgrammingTarnished_Refranys {
      * @param segones vector d'objetes de segones meitats
      */
     public static void ompleSegones(ArrayList<SegonaMeitat> segones){
-        
+        int i;
+        for (i = 0; i < NR_REFRANYS; i++) {
+            segones.add(new SegonaMeitat());
+        }
         
         segones.get(0).idSMeitat = 0;
         segones.get(0).nrOrdreAleatori = 0;
@@ -126,9 +135,9 @@ public class ProgrammingTarnished_Refranys {
      * Asigna ordre aleatori a les primeres meitats per mostrar-les
      * a continuació a l'usuari; aquesta acció s'haurà de repetir en
      * cada execució del programa.
-     * @param segones vector d'objectes de segones meitats
+     * @param primeres vector d'objectes de segones meitats
      */
-    public static void ordrePrimeres(ArrayList<PrimeraMeitat> primeres){
+    public static void ordrePrimeres(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
        //Codi mètode
        //Codi mètode
         Random rand = new Random();
@@ -152,6 +161,7 @@ public class ProgrammingTarnished_Refranys {
                     primeres.get(posicioRandom).idPMeitat = foo_primera;
                     posicionsRepetides.add(posicioRandom);
                     posicionsRepetides.add(i);
+                    primeres.get(i).nrOrdre2aPart = segones.get(i).idSMeitat;
                 } else {
                     i--;
                 }
@@ -167,11 +177,11 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
         //Codi mètode
+        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
-            System.out.printf("%c - %s | %d - %s \n", (char)(65 + i), (primeres.get(i).primeraMeitat), (i+1), (segones.get(i).segonaMeitat));
-            System.out.println("--------------------------------------------------------");
+            System.out.printf("%c - %-30s | %5d - %-30s \n", (char)(65 + i), (primeres.get(primeres.get(i).idPMeitat).primeraMeitat), (i+1), (segones.get(segones.get(i).idSMeitat).segonaMeitat));
         }
+        System.out.println("-----------------------------------------------------------------------------------------");
     }
     
     /**
@@ -192,8 +202,13 @@ public class ProgrammingTarnished_Refranys {
 
             // Guardamos la respuesta del usuario
             primeres.get(i).respostaUsuari = respuesta - 1; // Restamos 1 porque los índices en el ArrayList empiezan desde 0
+            comprobaEncerts(primeres, segones, i, primeres.get(i).respostaUsuari);
             System.out.println(); // Espacio para separar las jugadas
         }
+    }
+    
+    public static void sumaEncerts () {
+        encerts.add(1);
     }
     
     /**
@@ -233,6 +248,7 @@ public class ProgrammingTarnished_Refranys {
         ompleSegones(segones);
         
         ordreSegones(segones);
+        ordrePrimeres(primeres, segones);
         mostraMeitats(primeres, segones);
         demanaJugada(primeres, segones);
         
