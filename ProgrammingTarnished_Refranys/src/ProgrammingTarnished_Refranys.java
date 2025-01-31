@@ -167,6 +167,11 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
         //Codi mètode
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
+            System.out.printf("%c - %s | %d - %s \n", (char)(65 + i), (primeres.get(i).primeraMeitat), (i+1), (segones.get(i).segonaMeitat));
+            System.out.println("--------------------------------------------------------");
+        }
     }
     
     /**
