@@ -28,6 +28,7 @@ class SegonaMeitat{
  */
 public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;
+    final public static int NR_REFRANYS_TOTALS = 15;
     public static int encerts  = 0;
     public static Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
     
@@ -37,7 +38,7 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void omplePrimeres(ArrayList<PrimeraMeitat> primeres){
         int i;
-        for (i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS_TOTALS; i++) {
             primeres.add(new PrimeraMeitat());
         }
         
@@ -60,6 +61,46 @@ public class ProgrammingTarnished_Refranys {
         primeres.get(4).idPMeitat = 4;
         primeres.get(4).nrOrdre2aPart = 4;
         primeres.get(4).primeraMeitat = "Qui dia passa,";
+        
+        primeres.get(5).idPMeitat = 5;
+        primeres.get(5).nrOrdre2aPart = 5;
+        primeres.get(5).primeraMeitat = "A l’estiu";
+        
+        primeres.get(6).idPMeitat = 6;
+        primeres.get(6).nrOrdre2aPart = 6;
+        primeres.get(6).primeraMeitat = "De porc i de senyor";
+        
+        primeres.get(7).idPMeitat = 7;
+        primeres.get(7).nrOrdre2aPart = 7;
+        primeres.get(7).primeraMeitat = "Hostes vingueren";
+        
+        primeres.get(8).idPMeitat = 8;
+        primeres.get(8).nrOrdre2aPart = 8;
+        primeres.get(8).primeraMeitat = "De mica en mica";
+        
+        primeres.get(9).idPMeitat = 9;
+        primeres.get(9).nrOrdre2aPart = 9;
+        primeres.get(9).primeraMeitat = "Al pot petit";
+        
+        primeres.get(10).idPMeitat = 10;
+        primeres.get(10).nrOrdre2aPart = 10;
+        primeres.get(10).primeraMeitat = "Si vols estar ben servit,";
+        
+        primeres.get(11).idPMeitat = 11;
+        primeres.get(11).nrOrdre2aPart = 11;
+        primeres.get(11).primeraMeitat = "Qui de jove no treballa,";
+        
+        primeres.get(12).idPMeitat = 12;
+        primeres.get(12).nrOrdre2aPart = 12;
+        primeres.get(12).primeraMeitat = "A la taula d’en Bernat,";
+        
+        primeres.get(13).idPMeitat = 13;
+        primeres.get(13).nrOrdre2aPart = 13;
+        primeres.get(13).primeraMeitat = "Qui canta a la taula i xiula al llit";
+        
+        primeres.get(14).idPMeitat = 14;
+        primeres.get(14).nrOrdre2aPart = 14;
+        primeres.get(14).primeraMeitat = "D’on no n’hi ha,";
     }
     
     /**
@@ -68,7 +109,7 @@ public class ProgrammingTarnished_Refranys {
      */
     public static void ompleSegones(ArrayList<SegonaMeitat> segones){
         int i;
-        for (i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS_TOTALS; i++) {
             segones.add(new SegonaMeitat());
         }
         
@@ -91,6 +132,46 @@ public class ProgrammingTarnished_Refranys {
         segones.get(4).idSMeitat = 4;
         segones.get(4).nrOrdreAleatori = 4;
         segones.get(4).segonaMeitat = "any empeny.";
+        
+        segones.get(5).idSMeitat = 5;
+        segones.get(5).nrOrdreAleatori = 5;
+        segones.get(5).segonaMeitat = "tota cuca viu.";
+        
+        segones.get(6).idSMeitat = 6;
+        segones.get(6).nrOrdreAleatori = 6;
+        segones.get(6).segonaMeitat = "se n’ha de venir de mena.";
+        
+        segones.get(7).idSMeitat = 7;
+        segones.get(7).nrOrdreAleatori = 7;
+        segones.get(7).segonaMeitat = "que de casa ens tragueren.";
+        
+        segones.get(8).idSMeitat = 8;
+        segones.get(8).nrOrdreAleatori = 8;
+        segones.get(8).segonaMeitat = "s’omple la pica.";
+        
+        segones.get(9).idSMeitat = 9;
+        segones.get(9).nrOrdreAleatori = 9;
+        segones.get(9).segonaMeitat = "hi ha la bona confitura.";
+        
+        segones.get(10).idSMeitat = 10;
+        segones.get(10).nrOrdreAleatori = 10;
+        segones.get(10).segonaMeitat = "fes-te tu mateix el llit.";
+        
+        segones.get(11).idSMeitat = 11;
+        segones.get(11).nrOrdreAleatori = 11;
+        segones.get(11).segonaMeitat = "quan és vell dorm a la palla.";
+        
+        segones.get(12).idSMeitat = 12;
+        segones.get(12).nrOrdreAleatori = 12;
+        segones.get(12).segonaMeitat = "qui no hi és, no hi és comptat.";
+        
+        segones.get(13).idSMeitat = 13;
+        segones.get(13).nrOrdreAleatori = 13;
+        segones.get(13).segonaMeitat = "no té el seny gaire acomplit.";
+        
+        segones.get(14).idSMeitat = 14;
+        segones.get(14).nrOrdreAleatori = 14;
+        segones.get(14).segonaMeitat = "no en raja.";
      
     }
     
@@ -115,11 +196,11 @@ public class ProgrammingTarnished_Refranys {
         Integer posicioRandom;
         int foo_segona;
         
-        for (int i = 0; i < segones.size(); i++) {
-            posicioRandom = rand.nextInt(5);
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            posicioRandom = rand.nextInt(15);
             
             while(posicioRandom == i){
-                posicioRandom = rand.nextInt(5);
+                posicioRandom = rand.nextInt(15);
             }   
             
             // intercambiem els valors de la posicio actual i la generada aleatoriament
@@ -148,11 +229,11 @@ public class ProgrammingTarnished_Refranys {
         */
         Integer posicioRandom;
         int foo_primera;
-        for (int i = 0; i < primeres.size(); i++) {
-            posicioRandom = rand.nextInt(5);
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            posicioRandom = rand.nextInt(15);
             
             while (posicioRandom == i) {
-                posicioRandom = rand.nextInt(5);
+                posicioRandom = rand.nextInt(15);
             }
                 
             // intercambiem els valors de la posicio actual i la generada aleatoriament
