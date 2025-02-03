@@ -195,9 +195,6 @@ public class ProgrammingTarnished_Refranys {
             while (respuesta < 1 || respuesta > NR_REFRANYS) { 
                 respuesta = scanner.nextInt();
             } //Este while es para asegurarse que el usuario da una respuesta dentro del rango
-            
-            System.out.println(primeres.get(i).nrOrdre2aPart);
-            System.out.println(segones.get(respuesta-1).nrOrdreAleatori);
 
             // Guardamos la respuesta del usuario
             primeres.get(i).respostaUsuari = respuesta - 1; // Restamos 1 porque los índices en el ArrayList empiezan desde 0
