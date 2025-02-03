@@ -28,8 +28,8 @@ class SegonaMeitat{
  */
 public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;
+    public static int encerts  = 0;
     public static Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
-    public static ArrayList<Integer> encerts = new ArrayList<>();
     
     /**
      * Introdueix informació en el vector d'objectes de pimeres meitats
@@ -111,23 +111,21 @@ public class ProgrammingTarnished_Refranys {
         generant un nombre aleatori.
         Després intercanviem els valors entre sí.
         */
-        ArrayList<Integer> posicionsRepetides = new ArrayList<>(); 
+        
         Integer posicioRandom;
         int foo_segona;
+        
         for (int i = 0; i < segones.size(); i++) {
             posicioRandom = rand.nextInt(5);
-            if (posicionsRepetides.size() != 4) {
-                if ((posicionsRepetides.contains(posicioRandom) == false)) {
-                    // intercambiem els valors de la posicio actual i la generada aleatoriament
-                    foo_segona = segones.get(i).idSMeitat;
-                    segones.get(i).idSMeitat = segones.get(posicioRandom).idSMeitat;
-                    segones.get(posicioRandom).idSMeitat = foo_segona;
-                    posicionsRepetides.add(posicioRandom);
-                    posicionsRepetides.add(i);
-                } else {
-                    i--;
-                }
-            }
+            
+            while(posicioRandom == i){
+                posicioRandom = rand.nextInt(5);
+            }   
+            
+            // intercambiem els valors de la posicio actual i la generada aleatoriament
+            foo_segona = segones.get(i).nrOrdreAleatori;
+            segones.get(i).nrOrdreAleatori = segones.get(posicioRandom).nrOrdreAleatori;
+            segones.get(posicioRandom).nrOrdreAleatori = foo_segona;
         }
     }
 
@@ -148,25 +146,23 @@ public class ProgrammingTarnished_Refranys {
         generant un nombre aleatori.
         Després intercanviem els valors entre sí.
         */
-        ArrayList<Integer> posicionsRepetides = new ArrayList<>(); 
         Integer posicioRandom;
         int foo_primera;
         for (int i = 0; i < primeres.size(); i++) {
             posicioRandom = rand.nextInt(5);
-            if (posicionsRepetides.size() != 4) {
-                if ((posicionsRepetides.contains(posicioRandom) == false)) {
-                    // intercambiem els valors de la posicio actual i la generada aleatoriament
-                    foo_primera = primeres.get(i).idPMeitat;
-                    primeres.get(i).idPMeitat = primeres.get(posicioRandom).idPMeitat;
-                    primeres.get(posicioRandom).idPMeitat = foo_primera;
-                    posicionsRepetides.add(posicioRandom);
-                    posicionsRepetides.add(i);
-                    primeres.get(i).nrOrdre2aPart = segones.get(i).idSMeitat;
-                } else {
-                    i--;
-                }
+            
+            while (posicioRandom == i) {
+                posicioRandom = rand.nextInt(5);
             }
+                
+            // intercambiem els valors de la posicio actual i la generada aleatoriament
+                    
+            foo_primera = primeres.get(i).nrOrdre2aPart;
+            primeres.get(i).nrOrdre2aPart = primeres.get(posicioRandom).nrOrdre2aPart;
+            primeres.get(posicioRandom).nrOrdre2aPart = foo_primera;
+                
         }
+        
     }
     
     /**
@@ -179,7 +175,7 @@ public class ProgrammingTarnished_Refranys {
         //Codi mètode
         System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%c - %-30s | %5d - %-30s \n", (char)(65 + i), (primeres.get(primeres.get(i).idPMeitat).primeraMeitat), (i+1), (segones.get(segones.get(i).idSMeitat).segonaMeitat));
+            System.out.printf("%c - %-30s  | %5d - %-30s \n", (char)(65 + i), (primeres.get(primeres.get(i).nrOrdre2aPart).primeraMeitat), (i+1), (segones.get(segones.get(i).nrOrdreAleatori).segonaMeitat));
         }
         System.out.println("-----------------------------------------------------------------------------------------");
     }
@@ -199,16 +195,20 @@ public class ProgrammingTarnished_Refranys {
             while (respuesta < 1 || respuesta > NR_REFRANYS) { 
                 respuesta = scanner.nextInt();
             } //Este while es para asegurarse que el usuario da una respuesta dentro del rango
+            
+            System.out.println(primeres.get(i).nrOrdre2aPart);
+            System.out.println(segones.get(respuesta-1).nrOrdreAleatori);
 
             // Guardamos la respuesta del usuario
             primeres.get(i).respostaUsuari = respuesta - 1; // Restamos 1 porque los índices en el ArrayList empiezan desde 0
             comprobaEncerts(primeres, segones, i, primeres.get(i).respostaUsuari);
             System.out.println(); // Espacio para separar las jugadas
         }
+        
     }
     
     public static void sumaEncerts () {
-        encerts.add(1);
+        encerts++;
     }
     
     /**
@@ -220,7 +220,7 @@ public class ProgrammingTarnished_Refranys {
      */
 
     public static void comprobaEncerts (ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int aux, int resposta) {
-        if (primeres.get(aux).nrOrdre2aPart == segones.get(resposta).idSMeitat) {
+        if (primeres.get(aux).nrOrdre2aPart == segones.get(resposta).nrOrdreAleatori) {
             System.out.printf("Correcte!");
             sumaEncerts();
         }
@@ -251,6 +251,6 @@ public class ProgrammingTarnished_Refranys {
         ordrePrimeres(primeres, segones);
         mostraMeitats(primeres, segones);
         demanaJugada(primeres, segones);
-        
+        mostraResultats(encerts);
     }    
 }
