@@ -30,6 +30,7 @@ public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;
     final public static int NR_REFRANYS_TOTALS = 15;
     public static int encerts  = 0;
+    public static long tempsTotal = 0;
     public static Scanner scanner = new Scanner(System.in);//Abrimos scanner para los inputs del usuario
     
     /**
@@ -271,12 +272,16 @@ public class ProgrammingTarnished_Refranys {
     public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones){
 
         for (int i = 0; i < NR_REFRANYS; i++) { //Bucle para ir introduciendo cada una de las respuesta
-  
+            long comencaTime = System.currentTimeMillis();
             int respuesta = -1; //Esta variable es para guardar la respuesta del usuario en cada bucle
             while (respuesta < 1 || respuesta > NR_REFRANYS) { 
                 respuesta = scanner.nextInt();
             } //Este while es para asegurarse que el usuario da una respuesta dentro del rango
-
+            
+            long terminaTime = System.currentTimeMillis() - comencaTime;
+            terminaTime /= 100;
+            
+            tempsTotal = terminaTime;
             // Guardamos la respuesta del usuario
             primeres.get(i).respostaUsuari = respuesta - 1; // Restamos 1 porque los índices en el ArrayList empiezan desde 0
             comprobaEncerts(primeres, segones, i, primeres.get(i).respostaUsuari);
@@ -314,7 +319,7 @@ public class ProgrammingTarnished_Refranys {
         //Codi mètode
         String nomJugador = "1";
         int numErrors = NR_REFRANYS - numEncerts;
-        System.out.printf("Jugador %s:\nEncerts: %d\nErrors: %d",  nomJugador, numEncerts, numErrors);
+        System.out.printf("Jugador %s:\nEncerts: %d\nErrors: %d \nTemps que ha trigat l'usuari: %.1fs \n",  nomJugador, numEncerts, numErrors, (double)tempsTotal);
     }
     
     public static void main(String[] args) {
