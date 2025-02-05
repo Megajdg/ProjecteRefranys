@@ -317,18 +317,32 @@ public class ProgrammingTarnished_Refranys {
         System.out.printf("Jugador %s:\nEncerts: %d\nErrors: %d",  nomJugador, numEncerts, numErrors);
     }
     
+    
+    
+    // Funció per preguntar si volen jugar de nou
+    public static boolean tornarAJugar() {
+        System.out.println("\nVols jugar una altra partida? (sí/no)"); //Pregunta al usuari
+        String resposta = scanner.next().trim().toLowerCase(); // Ignora tot nomes detecta si si o no
+        return resposta.equals("sí") || resposta.equals("si");//Return amb la resposta
+    }
+    
     public static void main(String[] args) {
-        
-        ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
-        ArrayList<SegonaMeitat> segones = new ArrayList<>();
-        
-        omplePrimeres(primeres);
-        ompleSegones(segones);
-        
-        ordreSegones(segones);
-        ordrePrimeres(primeres, segones);
-        mostraMeitats(primeres, segones);
-        demanaJugada(primeres, segones);
-        mostraResultats(encerts);
+        boolean jugarDeNou;
+        do{
+            ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
+            ArrayList<SegonaMeitat> segones = new ArrayList<>();
+
+            omplePrimeres(primeres);
+            ompleSegones(segones);
+
+            ordreSegones(segones);
+            ordrePrimeres(primeres, segones);
+            mostraMeitats(primeres, segones);
+            demanaJugada(primeres, segones);
+            mostraResultats(encerts);
+
+            jugarDeNou = tornarAJugar();
+        }while (jugarDeNou);
+        System.out.println("Gràcies per jugar!");
     }    
 }
