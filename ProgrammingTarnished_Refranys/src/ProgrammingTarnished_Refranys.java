@@ -91,8 +91,22 @@ public class ProgrammingTarnished_Refranys {
         return resposta.equals("sí") || resposta.equals("si");
     }
     
+    public static void mostrarSolucions(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
+        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS ORDENATS.");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%c - %s %s \n", 
+                (char) (65 + i), primeres.get(i).primeraMeitat, 
+                segones.get(i).segonaMeitat);
+        }
+        System.out.println("-----------------------------------------------------------------------------------------");
+    }
+    
     public static void main(String[] args) {
-        boolean jugarDeNou;
+        boolean jugarDeNou = false;
+        int cicles = 0;
+        ArrayList<PrimeraMeitat> primeres;
+        ArrayList<SegonaMeitat> segones;
+        ArrayList<SegonaMeitat> segones_ord;
         do {
             encerts = 0;
 
@@ -120,11 +134,13 @@ public class ProgrammingTarnished_Refranys {
             Collections.shuffle(parells);
 
             // Seleccionem només NR_REFRANYS parelles
-            ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
-            ArrayList<SegonaMeitat> segones = new ArrayList<>();
+            primeres = new ArrayList<>();
+            segones = new ArrayList<>();
+           segones_ord = new ArrayList<>();
             for (int i = 0; i < NR_REFRANYS; i++) {
                 primeres.add(parells.get(i).primera);
                 segones.add(parells.get(i).segona);
+                segones_ord.add(parells.get(i).segona);
             }
 
             // Tornem a barrejar només les segones per desordenar-les
@@ -133,8 +149,19 @@ public class ProgrammingTarnished_Refranys {
             mostraMeitats(primeres, segones);
             demanaJugada(primeres, segones);
             mostraResultats(encerts);
-            jugarDeNou = tornarAJugar();
+            cicles++;
+            if (cicles != 2) {
+                if (encerts != 5) {
+                    jugarDeNou = tornarAJugar();
+                }
+                
+            } else {
+                jugarDeNou = false;
+            }
+            
         } while (jugarDeNou);
+        mostrarSolucions(primeres, segones_ord);
+
         System.out.println("Gràcies per jugar!");
     }
 }
