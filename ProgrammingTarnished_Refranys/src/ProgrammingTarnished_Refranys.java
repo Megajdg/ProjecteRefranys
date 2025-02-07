@@ -165,3 +165,7 @@ public class ProgrammingTarnished_Refranys {
         System.out.println("Gràcies per jugar!");
     }
 }
+
+
+
+//FALLA QUE CUANDO SE HACE LA SEGUNDA PARTIDA AL FALLAR QUE SALGAN LOS MISMOS REFRANYS!!
