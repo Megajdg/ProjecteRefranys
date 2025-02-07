@@ -37,9 +37,60 @@ class Parell {
 public class ProgrammingTarnished_Refranys {
     final public static int NR_REFRANYS = 5;
     final public static int NR_REFRANYS_TOTALS = 15;
+    public static long tempsTotal = 0;
     public static int encerts = 0;
     public static Scanner scanner = new Scanner(System.in);
 
+    public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
+        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%c - %-30s  | %d - %-30s \n", 
+                (char) (65 + i), primeres.get(i).primeraMeitat, 
+                (i + 1), segones.get(i).segonaMeitat);
+        }
+        System.out.println("-----------------------------------------------------------------------------------------");
+    }
+
+    public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            int resposta;
+            long tempsInici = System.currentTimeMillis();
+            do {
+                System.out.printf("Selecciona la segona meitat pel refrany '%s' (1-%d): ", primeres.get(i).primeraMeitat, NR_REFRANYS);
+                resposta = scanner.nextInt();
+            } while (resposta < 1 || resposta > NR_REFRANYS);
+            long tempsFinal = System.currentTimeMillis() - tempsInici;
+            tempsTotal = tempsFinal / 100;
+            primeres.get(i).respostaUsuari = resposta - 1;
+            comprobaEncerts(primeres, segones, i, resposta - 1);
+            System.out.println();
+        }
+    }
+
+    public static void comprobaEncerts(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int index, int resposta) {
+        int idPrimera = primeres.get(index).idPMeitat;
+        int idSegona = segones.get(resposta).idSMeitat;
+
+        if (idPrimera == idSegona) {
+            System.out.println("Correcte!");
+            encerts++;
+        } else {
+            System.out.println("Incorrecte!");
+        }
+        //System.out.println("Comparant " + idPrimera + " amb " + idSegona);
+    }
+
+    public static void mostraResultats(int numEncerts) {
+        int numErrors = NR_REFRANYS - numEncerts;
+        System.out.printf("Encerts: %d\nErrors: %d\nTemps de jugada: %.1f\n", numEncerts, numErrors, (double)tempsTotal);
+    }
+
+    public static boolean tornarAJugar() {
+        System.out.println("\nVols jugar una altra partida? (sí/no)");
+        String resposta = scanner.next().trim().toLowerCase();
+        return resposta.equals("sí") || resposta.equals("si");
+    }
+    
     public static void main(String[] args) {
         boolean jugarDeNou;
         do {
@@ -85,53 +136,5 @@ public class ProgrammingTarnished_Refranys {
             jugarDeNou = tornarAJugar();
         } while (jugarDeNou);
         System.out.println("Gràcies per jugar!");
-    }
-
-    public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
-        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%c - %-30s  | %d - %-30s \n", 
-                (char) (65 + i), primeres.get(i).primeraMeitat, 
-                (i + 1), segones.get(i).segonaMeitat);
-        }
-        System.out.println("-----------------------------------------------------------------------------------------");
-    }
-
-    public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            int resposta;
-            do {
-                System.out.printf("Selecciona la segona meitat pel refrany '%s' (1-%d): ", primeres.get(i).primeraMeitat, NR_REFRANYS);
-                resposta = scanner.nextInt();
-            } while (resposta < 1 || resposta > NR_REFRANYS);
-
-            primeres.get(i).respostaUsuari = resposta - 1;
-            comprobaEncerts(primeres, segones, i, resposta - 1);
-            System.out.println();
-        }
-    }
-
-    public static void comprobaEncerts(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int index, int resposta) {
-        int idPrimera = primeres.get(index).idPMeitat;
-        int idSegona = segones.get(resposta).idSMeitat;
-
-        if (idPrimera == idSegona) {
-            System.out.println("Correcte!");
-            encerts++;
-        } else {
-            System.out.println("Incorrecte!");
-        }
-        System.out.println("Comparant " + idPrimera + " amb " + idSegona);
-    }
-
-    public static void mostraResultats(int numEncerts) {
-        int numErrors = NR_REFRANYS - numEncerts;
-        System.out.printf("Encerts: %d\nErrors: %d\n", numEncerts, numErrors);
-    }
-
-    public static boolean tornarAJugar() {
-        System.out.println("\nVols jugar una altra partida? (sí/no)");
-        String resposta = scanner.next().trim().toLowerCase();
-        return resposta.equals("sí") || resposta.equals("si");
     }
 }
