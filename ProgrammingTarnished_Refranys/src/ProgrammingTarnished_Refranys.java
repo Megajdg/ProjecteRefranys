@@ -23,6 +23,16 @@ class SegonaMeitat {
     }
 }
 
+class Significats {
+    int idSignificat; 
+    String significat; 
+
+    Significats(int id, String text) {
+        this.idSignificat = id;
+        this.significat = text;
+    }
+}
+
 // Classe per mantenir les parelles correctes abans de separar-les
 class Parell {
     PrimeraMeitat primera;
@@ -107,6 +117,7 @@ public class ProgrammingTarnished_Refranys {
         ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
         ArrayList<SegonaMeitat> segones = new ArrayList<>();
         ArrayList<SegonaMeitat> segones_ord = new ArrayList<>();
+        ArrayList<Significats> significat = new ArrayList<>();
         do {
             encerts = 0;
 
@@ -119,6 +130,14 @@ public class ProgrammingTarnished_Refranys {
             };
             String[] segonesText = {
                 "que no vagi a l'era.", "fins que no el tinguis al sac i ben lligat.", "al primer crit.", 
+                "tal trobaràs.", "any empeny.", "tota cuca viu.", "se n’ha de venir de mena.", 
+                "que de casa ens tragueren.", "s’omple la pica.", "hi ha la bona confitura.", 
+                "fes-te tu mateix el llit.", "quan és vell dorm a la palla.", "qui no hi és, no hi és comptat.", 
+                "no té el seny gaire acomplit.", "no en raja."
+            };
+            String[] significatText = {
+                //Falta rellenarlo con las frases correctas!!!
+                "Quan no es vulguin afrontar les conseqüències d'una acció o situació, el millor és evitar-la des del principi.", "fins que no el tinguis al sac i ben lligat.", "al primer crit.", 
                 "tal trobaràs.", "any empeny.", "tota cuca viu.", "se n’ha de venir de mena.", 
                 "que de casa ens tragueren.", "s’omple la pica.", "hi ha la bona confitura.", 
                 "fes-te tu mateix el llit.", "quan és vell dorm a la palla.", "qui no hi és, no hi és comptat.", 
