@@ -104,9 +104,9 @@ public class ProgrammingTarnished_Refranys {
     public static void main(String[] args) {
         boolean jugarDeNou = false;
         int cicles = 0;
-        ArrayList<PrimeraMeitat> primeres;
-        ArrayList<SegonaMeitat> segones;
-        ArrayList<SegonaMeitat> segones_ord;
+        ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
+        ArrayList<SegonaMeitat> segones = new ArrayList<>();
+        ArrayList<SegonaMeitat> segones_ord = new ArrayList<>();
         do {
             encerts = 0;
 
@@ -132,19 +132,21 @@ public class ProgrammingTarnished_Refranys {
 
             // Barregem les parelles
             Collections.shuffle(parells);
-
-            // Seleccionem només NR_REFRANYS parelles
-            primeres = new ArrayList<>();
-            segones = new ArrayList<>();
-           segones_ord = new ArrayList<>();
-            for (int i = 0; i < NR_REFRANYS; i++) {
-                primeres.add(parells.get(i).primera);
-                segones.add(parells.get(i).segona);
-                segones_ord.add(parells.get(i).segona);
+            if (cicles == 0) {
+                for (int i = 0; i < NR_REFRANYS; i++) {
+                    primeres.add(parells.get(i).primera);
+                    segones.add(parells.get(i).segona);
+                    segones_ord.add(parells.get(i).segona);
+                }
+                // Tornem a barrejar només les segones per desordenar-les
+                Collections.shuffle(segones);
             }
-
-            // Tornem a barrejar només les segones per desordenar-les
-            Collections.shuffle(segones);
+            
+            //Repetim la barreja per tornar a desordenar-les a la segona partida
+            else if (cicles == 1) {
+                Collections.shuffle(primeres);
+                Collections.shuffle(segones);
+            }
 
             mostraMeitats(primeres, segones);
             demanaJugada(primeres, segones);
