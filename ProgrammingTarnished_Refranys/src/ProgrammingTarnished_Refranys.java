@@ -87,17 +87,17 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
-        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
+        System.out.printf("REFRANYS CATALANS\nRelaciona el inici d'aquests refranys catalans amb la seva part corresponent:\n-------------------------------------------------------------------------------------\n");
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%c - %-30s  | %d - %-30s %n",
-                    (char) (65 + i), primeres.get(i), (i + 1), segones.get(i));
+            System.out.printf("%-36s  | %d - %-36s %n",
+                    primeres.get(i), (i + 1), segones.get(i));
         }
-        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------");
     }
 
     private void demanarJugades(ArrayList<String> primeres, ArrayList<String> segones, ArrayList<Refrany> refranys) {
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("Selecciona la segona meitat pel refrany '%s' (1-%d): ", primeres.get(i), NR_REFRANYS);
+            System.out.printf("Selecciona la segona meitat pel refrany '%s' (1 - %d): ", primeres.get(i), NR_REFRANYS);
             long tempsInici = System.currentTimeMillis();
             int resposta = scanner.nextInt() - 1;
             long tempsFinal = System.currentTimeMillis() - tempsInici;
@@ -123,7 +123,7 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private boolean tornarAJugar() {
-        System.out.println("\nVols jugar una altra partida? (Sí­/No)");
+        System.out.println("\nVols jugar una altra partida? (Sí / No)");
         String resposta = scanner.next().trim().toLowerCase();
         return resposta.equals("sí­") || resposta.equals("si");
     }
