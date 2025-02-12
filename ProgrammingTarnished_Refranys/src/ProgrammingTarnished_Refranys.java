@@ -1,188 +1,132 @@
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
-class PrimeraMeitat {
-    int idPMeitat;  
-    int respostaUsuari; 
-    String primeraMeitat; 
+class Refrany {
+    private final int id;
+    private final String primeraMeitat;
+    private final String segonaMeitat;
 
-    PrimeraMeitat(int id, String text) {
-        this.idPMeitat = id;
-        this.primeraMeitat = text;
+    public Refrany(int id, String primera, String segona) {
+        this.id = id;
+        this.primeraMeitat = primera;
+        this.segonaMeitat = segona;
     }
-}
 
-class SegonaMeitat {
-    int idSMeitat; 
-    String segonaMeitat; 
-
-    SegonaMeitat(int id, String text) {
-        this.idSMeitat = id;
-        this.segonaMeitat = text;
+    public int getId() {
+        return id;
     }
-}
 
-class Significats {
-    int idSignificat; 
-    String significat; 
-
-    Significats(int id, String text) {
-        this.idSignificat = id;
-        this.significat = text;
+    public String getPrimeraMeitat() {
+        return primeraMeitat;
     }
-}
 
-// Classe per mantenir les parelles correctes abans de separar-les
-class Parell {
-    PrimeraMeitat primera;
-    SegonaMeitat segona;
-
-    Parell(PrimeraMeitat primera, SegonaMeitat segona) {
-        this.primera = primera;
-        this.segona = segona;
+    public String getSegonaMeitat() {
+        return segonaMeitat;
     }
 }
 
 public class ProgrammingTarnished_Refranys {
-    final public static int NR_REFRANYS = 5;
-    final public static int NR_REFRANYS_TOTALS = 15;
-    public static long tempsTotal = 0;
-    public static int encerts = 0;
-    public static Scanner scanner = new Scanner(System.in);
+    private static final int NR_REFRANYS = 5;
+    private static final int NR_REFRANYS_TOTALS = 15;
+    private final Scanner scanner = new Scanner(System.in);
+    private long tempsTotal;
+    private int encerts;
+    private List<Refrany> refranysSeleccionats;
+    
+    public void iniciarJoc() {
+        boolean jugarDeNou;
+        do {
+            jugarDeNou = jugarPartida();
+        } while (jugarDeNou);
+        System.out.println("GrÃ cies per jugar!");
+    }
 
-    public static void mostraMeitats(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
+    private boolean jugarPartida() {
+        encerts = 0;
+        tempsTotal = 0;
+        if (refranysSeleccionats == null) {
+            refranysSeleccionats = seleccionarRefranys();
+        }
+        
+        List<String> primeres = new ArrayList<>();
+        List<String> segones = new ArrayList<>();
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            primeres.add(refranysSeleccionats.get(i).getPrimeraMeitat());
+            segones.add(refranysSeleccionats.get(i).getSegonaMeitat());
+        }
+        Collections.shuffle(segones);
+
+        mostrarRefranys(primeres, segones);
+        demanarJugades(primeres, segones, refranysSeleccionats);
+        mostrarResultats();
+        return tornarAJugar();
+    }
+
+    private List<Refrany> seleccionarRefranys() {
+        String[] primeresText = {
+            "Qui no vulgui pols", "No diguis blat", "A la taula i al llit", "Tal farÃ s,", "Qui dia passa,",
+            "A lâ€™estiu", "De porc i de senyor", "Hostes vingueren", "De mica en mica", "Al pot petit",
+            "Si vols estar ben servit,", "Qui de jove no treballa,", "A la taula dâ€™en Bernat,",
+            "Qui canta a la taula i xiula al llit", "Dâ€™on no nâ€™hi ha,"
+        };
+        String[] segonesText = {
+            "que no vagi a l'era.", "fins que no el tinguis al sac i ben lligat.", "al primer crit.",
+            "tal trobarÃ s.", "any empeny.", "tota cuca viu.", "se nâ€™ha de venir de mena.",
+            "que de casa ens tragueren.", "sâ€™omple la pica.", "hi ha la bona confitura.",
+            "fes-te tu mateix el llit.", "quan Ã©s vell dorm a la palla.", "qui no hi Ã©s, no hi Ã©s comptat.",
+            "no tÃ© el seny gaire acomplit.", "no en raja."
+        };
+        List<Refrany> refranys = new ArrayList<>();
+        for (int i = 0; i < NR_REFRANYS_TOTALS; i++) {
+            refranys.add(new Refrany(i, primeresText[i], segonesText[i]));
+        }
+        Collections.shuffle(refranys);
+        return refranys.subList(0, NR_REFRANYS);
+    }
+
+    private void mostrarRefranys(List<String> primeres, List<String> segones) {
         System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%c - %-30s  | %d - %-30s \n", 
-                (char) (65 + i), primeres.get(i).primeraMeitat, 
-                (i + 1), segones.get(i).segonaMeitat);
+            System.out.printf("%c - %-30s  | %d - %-30s %n",
+                    (char) (65 + i), primeres.get(i), (i + 1), segones.get(i));
         }
         System.out.println("-----------------------------------------------------------------------------------------");
     }
 
-    public static void demanaJugada(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
+    private void demanarJugades(List<String> primeres, List<String> segones, List<Refrany> refranys) {
         for (int i = 0; i < NR_REFRANYS; i++) {
-            int resposta;
+            System.out.printf("Selecciona la segona meitat pel refrany '%s' (1-%d): ", primeres.get(i), NR_REFRANYS);
             long tempsInici = System.currentTimeMillis();
-            do {
-                System.out.printf("Selecciona la segona meitat pel refrany '%s' (1-%d): ", primeres.get(i).primeraMeitat, NR_REFRANYS);
-                resposta = scanner.nextInt();
-            } while (resposta < 1 || resposta > NR_REFRANYS);
+            int resposta = scanner.nextInt() - 1;
             long tempsFinal = System.currentTimeMillis() - tempsInici;
-            tempsTotal = tempsFinal / 100;
-            primeres.get(i).respostaUsuari = resposta - 1;
-            comprobaEncerts(primeres, segones, i, resposta - 1);
-            System.out.println();
+            tempsTotal += tempsFinal / 1000.0;
+            validarResposta(primeres.get(i), segones.get(resposta), refranys);
         }
     }
 
-    public static void comprobaEncerts(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones, int index, int resposta) {
-        int idPrimera = primeres.get(index).idPMeitat;
-        int idSegona = segones.get(resposta).idSMeitat;
-
-        if (idPrimera == idSegona) {
-            System.out.println("Correcte!");
-            encerts++;
-        } else {
-            System.out.println("Incorrecte!");
+    private void validarResposta(String primera, String respostaUsuari, List<Refrany> refranys) {
+        for (Refrany refrany : refranys) {
+            if (refrany.getPrimeraMeitat().equals(primera) && refrany.getSegonaMeitat().equals(respostaUsuari)) {
+                System.out.println("Correcte!");
+                encerts++;
+                return;
+            }
         }
-        //System.out.println("Comparant " + idPrimera + " amb " + idSegona);
+        System.out.println("Incorrecte!");
     }
 
-    public static void mostraResultats(int numEncerts) {
-        int numErrors = NR_REFRANYS - numEncerts;
-        System.out.printf("Encerts: %d\nErrors: %d\nTemps de jugada: %.1f\n", numEncerts, numErrors, (double)tempsTotal);
+    private void mostrarResultats() {
+        int errors = NR_REFRANYS - encerts;
+        System.out.printf("Encerts: %d%nErrors: %d%nTemps total: %.1f segons%n", encerts, errors, (double) tempsTotal);
     }
 
-    public static boolean tornarAJugar() {
-        System.out.println("\nVols jugar una altra partida? (sí/no)");
+    private boolean tornarAJugar() {
+        System.out.println("\nVols jugar una altra partida? (sÃ­/no)");
         String resposta = scanner.next().trim().toLowerCase();
-        return resposta.equals("sí") || resposta.equals("si");
+        return resposta.equals("sÃ­") || resposta.equals("si");
     }
-    
-    public static void mostrarSolucions(ArrayList<PrimeraMeitat> primeres, ArrayList<SegonaMeitat> segones) {
-        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS ORDENATS.");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%c - %s %s \n", 
-                (char) (65 + i), primeres.get(i).primeraMeitat, 
-                segones.get(i).segonaMeitat);
-        }
-        System.out.println("-----------------------------------------------------------------------------------------");
-    }
-    
+
     public static void main(String[] args) {
-        boolean jugarDeNou = false;
-        int cicles = 0;
-        ArrayList<PrimeraMeitat> primeres = new ArrayList<>();
-        ArrayList<SegonaMeitat> segones = new ArrayList<>();
-        ArrayList<SegonaMeitat> segones_ord = new ArrayList<>();
-        ArrayList<Significats> significat = new ArrayList<>();
-        do {
-            encerts = 0;
-
-            ArrayList<Parell> parells = new ArrayList<>();
-            String[] primeresText = {
-                "Qui no vulgui pols", "No diguis blat", "A la taula i al llit", "Tal faràs,", "Qui dia passa,", 
-                "A l’estiu", "De porc i de senyor", "Hostes vingueren", "De mica en mica", "Al pot petit", 
-                "Si vols estar ben servit,", "Qui de jove no treballa,", "A la taula d’en Bernat,", 
-                "Qui canta a la taula i xiula al llit", "D’on no n’hi ha,"
-            };
-            String[] segonesText = {
-                "que no vagi a l'era.", "fins que no el tinguis al sac i ben lligat.", "al primer crit.", 
-                "tal trobaràs.", "any empeny.", "tota cuca viu.", "se n’ha de venir de mena.", 
-                "que de casa ens tragueren.", "s’omple la pica.", "hi ha la bona confitura.", 
-                "fes-te tu mateix el llit.", "quan és vell dorm a la palla.", "qui no hi és, no hi és comptat.", 
-                "no té el seny gaire acomplit.", "no en raja."
-            };
-            String[] significatText = {
-                //Falta rellenarlo con las frases correctas!!!
-                "Quan no es vulguin afrontar les conseqüències d'una acció o situació, el millor és evitar-la des del principi.", "fins que no el tinguis al sac i ben lligat.", "al primer crit.", 
-                "tal trobaràs.", "any empeny.", "tota cuca viu.", "se n’ha de venir de mena.", 
-                "que de casa ens tragueren.", "s’omple la pica.", "hi ha la bona confitura.", 
-                "fes-te tu mateix el llit.", "quan és vell dorm a la palla.", "qui no hi és, no hi és comptat.", 
-                "no té el seny gaire acomplit.", "no en raja."
-            };
-
-            // Creem les parelles correctes
-            for (int i = 0; i < NR_REFRANYS_TOTALS; i++) {
-                parells.add(new Parell(new PrimeraMeitat(i, primeresText[i]), new SegonaMeitat(i, segonesText[i])));
-            }
-
-            // Barregem les parelles
-            Collections.shuffle(parells);
-            if (cicles == 0) {
-                for (int i = 0; i < NR_REFRANYS; i++) {
-                    primeres.add(parells.get(i).primera);
-                    segones.add(parells.get(i).segona);
-                    segones_ord.add(parells.get(i).segona);
-                }
-                // Tornem a barrejar només les segones per desordenar-les
-                Collections.shuffle(segones);
-            }
-            
-            //Repetim la barreja per tornar a desordenar-les a la segona partida
-            else if (cicles == 1) {
-                Collections.shuffle(primeres);
-                Collections.shuffle(segones);
-            }
-
-            mostraMeitats(primeres, segones);
-            demanaJugada(primeres, segones);
-            mostraResultats(encerts);
-            cicles++;
-            if (cicles != 2) {
-                if (encerts != 5) {
-                    jugarDeNou = tornarAJugar();
-                }
-                
-            } else {
-                jugarDeNou = false;
-            }
-            
-        } while (jugarDeNou);
-        mostrarSolucions(primeres, segones_ord);
-
-        System.out.println("Gràcies per jugar!");
+        new ProgrammingTarnished_Refranys().iniciarJoc();
     }
 }
+
