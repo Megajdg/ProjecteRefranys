@@ -28,16 +28,18 @@ public class ProgrammingTarnished_Refranys {
     private static final int NR_REFRANYS = 5;
     private static final int NR_REFRANYS_TOTALS = 15;
     private final Scanner scanner = new Scanner(System.in);
-    private long tempsTotal;
+    private double tempsTotal;
     private int encerts;
+    private int nPartides;
     private ArrayList<Refrany> refranysSeleccionats;
     
     public void iniciarJoc() {
         boolean jugarDeNou;
+        nPartides = 0;
         do {
             jugarDeNou = jugarPartida();
         } while (jugarDeNou);
-        System.out.println("Gràcies per jugar!");
+        System.out.println("\nGràcies per jugar!");
     }
 
     private boolean jugarPartida() {
@@ -59,11 +61,12 @@ public class ProgrammingTarnished_Refranys {
         mostrarRefranys(primeres, segones);
         demanarJugades(primeres, segones, refranysSeleccionats);
         mostrarResultats();
-        if (encerts != 5) {
+        if (encerts != 5 && nPartides == 0) {
             resultat = tornarAJugar();
         } else {
             resultat = false;
         }
+        nPartides++;
         return resultat;
     }
 
@@ -110,7 +113,7 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
-        System.out.printf("REFRANYS CATALANS\nRelaciona el inici d'aquests refranys catalans amb la seva part corresponent:\n-------------------------------------------------------------------------------------\n");
+        System.out.printf("\nREFRANYS CATALANS\nRelaciona el inici d'aquests refranys catalans amb la seva part corresponent:\n-------------------------------------------------------------------------------------\n");
         for (int i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-36s  | %d - %-36s %n",
                     primeres.get(i), (i + 1), segones.get(i));
@@ -119,11 +122,32 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private void demanarJugades(ArrayList<String> primeres, ArrayList<String> segones, ArrayList<Refrany> refranys) {
+        double tempsInici;
+        int resposta;
+        double tempsFinal;
+        
+        resposta = 0;
         for (int i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("Selecciona la segona meitat pel refrany '%s' (1 - %d): ", primeres.get(i), NR_REFRANYS);
-            long tempsInici = System.currentTimeMillis();
-            int resposta = scanner.nextInt() - 1;
-            long tempsFinal = System.currentTimeMillis() - tempsInici;
+            tempsInici = System.currentTimeMillis();
+            do {
+                boolean error;
+                do {
+                    try {
+                        error = false;
+                        resposta = scanner.nextInt() - 1;
+                    } catch (InputMismatchException ex) {
+                        System.out.println("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                        scanner.next();
+                        error = true;
+                    }
+                } while (error);
+                
+                if (resposta < 0 || resposta > NR_REFRANYS - 1) {
+                    System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                }
+            } while (resposta < 0 || resposta > NR_REFRANYS - 1);
+            tempsFinal = System.currentTimeMillis() - tempsInici;
             tempsTotal += tempsFinal / 1000.0;
             validarResposta(primeres.get(i), segones.get(resposta), refranys);
         }
@@ -141,13 +165,22 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private void mostrarResultats() {
-        int errors = NR_REFRANYS - encerts;
-        System.out.printf("Encerts: %d%nErrors: %d%nTemps total: %.1f segons%n", encerts, errors, (double) tempsTotal);
+        int errors;
+        errors = NR_REFRANYS - encerts;
+        System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", encerts, errors, tempsTotal);
     }
 
     private boolean tornarAJugar() {
+        String resposta;
+        
         System.out.println("\nVols jugar una altra partida? (Sí / No)");
-        String resposta = scanner.next().trim().toLowerCase();
+        resposta = "";
+        do {
+            resposta = scanner.next().trim().toLowerCase();
+            if (!resposta.equals("si") && !resposta.equals("no")) {
+                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+            }
+        } while (!resposta.equals("si") && !resposta.equals("no"));
         return resposta.equals("sí­") || resposta.equals("si");
     }
 
@@ -155,4 +188,3 @@ public class ProgrammingTarnished_Refranys {
         new ProgrammingTarnished_Refranys().iniciarJoc();
     }
 }
-
