@@ -41,6 +41,7 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private boolean jugarPartida() {
+        boolean resultat;
         encerts = 0;
         tempsTotal = 0;
         if (refranysSeleccionats == null) {
@@ -58,7 +59,12 @@ public class ProgrammingTarnished_Refranys {
         mostrarRefranys(primeres, segones);
         demanarJugades(primeres, segones, refranysSeleccionats);
         mostrarResultats();
-        return tornarAJugar();
+        if (encerts != 5) {
+            resultat = tornarAJugar();
+        } else {
+            resultat = false;
+        }
+        return resultat;
     }
 
     private ArrayList<Refrany> seleccionarRefranys() {
@@ -74,6 +80,23 @@ public class ProgrammingTarnished_Refranys {
             "que de casa ens tragueren.", "s'omple la pica.", "hi ha la bona confitura.",
             "fes-te tu mateix el llit.", "quan és vell dorm a la palla.", "qui no hi és, no hi és comptat.",
             "no té el seny gaire acomplit.", "no en raja."
+        };
+        String[] significatsText = {
+            "Quan no es vulguin afrontar les conseqüències d’una acció o situació, el millor és evitar-la des del principi.",
+            "No cal donar res per fet fins que no estigui totalment assegurat.",
+            "Reflecteix la importància de ser puntual, de la disciplina i d’estar sempre preparat per respondre amb celeritat.",
+            "Transmet una lliçó de responsabilitat i ètica, recordant-nos que les nostres accions, bones o dolentes, ens acabaran retornant en forma de resultats o situacions similars.",
+            "El temps avança, fins i tot quan sembla que no estem fent res d'especial per accelerar-lo; les coses van canviant de forma natural a mesura que vivim el present.",
+            "En condicions favorables o en èpoques de prosperitat, fins i tot aquelles persones que normalment viuen en condicions difícils poden beneficiar-se d'aquestes circumstàncies positives.",
+            "Les persones, per molt que ho intentin, no poden escapar completament del seu origen o condicions inicials.",
+            "La presència de certes persones o circumstàncies pot canviar la dinàmica habitual d’un lloc o una situació.",
+            "Transmet una lliçó de paciència i persistència: a vegades cal temps i esforç continu per aconseguir grans resultats.",
+            "No cal jutjar les coses només pel seu aspecte extern o la seva mida, ja que el que realment importa és el contingut.",
+            "Transmet la importància de ser autònom i responsable de les pròpies accions i decisions, en lloc de deixar-ho tot en mans d'altres.",
+            "Transmet una lliçó de responsabilitat i planificació per al futur: és important treballar i estalviar quan som joves per poder viure millor quan siguem grans.",
+            "Per formar part d'alguna cosa, cal estar-hi present i involucrat. És una crida a la responsabilitat i a la participació activa.",
+            "És una crítica a la falta de discerniment i a la falta d'harmonia entre el comportament i el context.",
+            "Si no hi ha els mitjans, els recursos o les condicions necessàries per obtenir alguna cosa, simplement no es pot aconseguir. Les expectatives han de ser realistes segons les circumstàncies."
         };
         ArrayList<Refrany> refranys = new ArrayList<>();
         for (int i = 0; i < NR_REFRANYS_TOTALS; i++) {
