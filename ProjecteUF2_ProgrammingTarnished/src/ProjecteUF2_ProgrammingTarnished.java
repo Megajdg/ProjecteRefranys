@@ -195,10 +195,7 @@ public class ProjecteUF2_ProgrammingTarnished {
                 jugadors.get(jugadorActual-1).setEncerts(encerts);
                 jugadors.get(jugadorActual-1).setTemps(tempsTotal);
             }
-            
             mostrarResultats2Jug(jugadors);
-            
-            
         }
         System.out.println("\nGràcies per jugar!");
     }
@@ -213,7 +210,10 @@ public class ProjecteUF2_ProgrammingTarnished {
         tempsTotal = 0;
         int i;
         
-        if (refranysSeleccionats == null) {
+        if (refranysSeleccionats == null && !mode2Jugadors) {
+            refranysSeleccionats = seleccionarRefranys();
+        }
+        else if (mode2Jugadors) {
             refranysSeleccionats = seleccionarRefranys();
         }
         
@@ -230,6 +230,7 @@ public class ProjecteUF2_ProgrammingTarnished {
             segones.add(refranysSeleccionats.get(i).getSegonaMeitat());
         }
         Collections.shuffle(segones);
+        Collections.shuffle(primeres);
 
         mostrarRefranys(primeres, segones);
         demanarJugades(primeres, segones, refranysSeleccionats);
@@ -415,7 +416,7 @@ public class ProjecteUF2_ProgrammingTarnished {
 
         
         System.out.println("");
-        if (jugadors.get(0).getEncerts() < jugadors.get(1).getEncerts()) {
+        if (jugadors.get(0).getEncerts() > jugadors.get(1).getEncerts()) {
             System.out.println("---------------------------");
             System.out.println("  JUGADOR (1): HA GUANYAT");
             System.out.println("---------------------------");
@@ -447,6 +448,28 @@ public class ProjecteUF2_ProgrammingTarnished {
         encerts = 0;
         tempsTotal = 0;
         int i;
+
+        if (refranysSeleccionats == null && !mode2Jugadors) {
+            refranysSeleccionats = seleccionarRefranys();
+        }
+        else if (mode2Jugadors) {
+            refranysSeleccionats = seleccionarRefranys();
+        }
+        
+        if (nPartides == 0 && mode2Jugadors) {
+            System.out.printf("\n---------------\n");
+            System.out.printf(" JUGADOR: (%d) \n", jugadorActual);
+            System.out.println("---------------");
+        }
+
+        ArrayList<String> primeres = new ArrayList<>();
+        ArrayList<String> segones = new ArrayList<>();
+        for (i = 0; i < NR_REFRANYS; i++) {
+            primeres.add(refranysSeleccionats.get(i).getPrimeraMeitat());
+            segones.add(refranysSeleccionats.get(i).getSegonaMeitat());
+        }
+        Collections.shuffle(segones);
+        Collections.shuffle(primeres);
         
         ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
         
@@ -456,12 +479,12 @@ public class ProjecteUF2_ProgrammingTarnished {
         
         Collections.shuffle(significats);
         
-        System.out.printf("\nREFRANYS CATALANS\nRelaciona els refranys amb el seu significat corresponent:\n-------------------------------------------------------------------------------------\n");
+        System.out.printf("\nREFRANYS CATALANS\nRelaciona els refranys amb el seu significat corresponent:\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         for (i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-70s | %d - %s %n",
                     refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(),(i+1), significats.get(i));
         }
-        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         demanarJugadesSig(significats);
         mostrarResultats();
         
