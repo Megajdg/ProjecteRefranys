@@ -97,127 +97,7 @@ public class ProgrammingTarnished_Refranys {
         System.out.println("\nGràcies per jugar!");
     }
     
-    private boolean jugarIndividual() {
-        int resposta;
-        
-        System.out.print("\nVols jugar de manera individual o amb parelles? (1/2): ");
-        resposta = 0;
-        do {
-            resposta = scanner.nextInt();
-            if (resposta!=1 && resposta!=1 && resposta!=2) {
-                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
-            }
-        } while (resposta!=1 && resposta!=1 && resposta!=2);
-        return resposta == 1;
-    }
-    
-    private boolean passarASeguentFase() {
-        System.out.println("\nVols jugar a emparellar refranys amb el seu significat? (Sí / No)");
-        return siNo();
-    }
-    
-    private void mostrarSolucio() {
-        String resposta;
-        scanner.nextLine();
-        System.out.println("\nPremi \"Enter\" per continuar...");
-        resposta = scanner.nextLine();
-        System.out.printf("\nSOLUCIONS DELS REFRANYS\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%s %n",
-                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
-    }
-    
-    private void mostrarSolucioSig() {
-        System.out.printf("\nSOLUCIONS DELS SIGNIFICATS\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%s: %s %n",
-                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(), refranysSeleccionats.get(i).getSignificat());
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
-    }
-    
-    private boolean segonaFase () {
-        encerts = 0;
-        boolean resultat;
-        
-        ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
-        
-        for (int i = 0; i < NR_REFRANYS ; i++) {
-            significats.add(refranysSeleccionats.get(i).getSignificat());
-        }
-        
-        Collections.shuffle(significats);
-        
-        System.out.printf("\nREFRANYS CATALANS\nRelaciona els refranys amb el seu significat corresponent:\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%-70s | %d - %s %n",
-                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(),(i+1), significats.get(i));
-        }
-        System.out.println("-----------------------------------------------------------------------------------------");
-        demanarJugadesSig(significats);
-        
-        if (encerts != 5) {
-            resultat = tornarAJugar();
-        } else {
-            resultat = false;
-        }
-        
-        return resultat;
-    }
-    
-    private void demanarJugadesSig(ArrayList<String> significats) {
-        int resposta;
-        
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("Selecciona el significat del refrany -> (%s): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
-            resposta = Jugada();
-            validarRespostaSig(significats.get(resposta), refranysSeleccionats.get(i).getSignificat());
-        }
-        
-    }
-    
-    private int Jugada() {
-        double tempsInici;
-        double tempsFinal;
-        int resposta;
-        tempsInici = System.currentTimeMillis();
-        
-        resposta = 0;
-        do {
-            boolean error;
-            do {
-                try {
-                    error = false;
-                    resposta = scanner.nextInt() - 1;
-                } catch (InputMismatchException ex) {
-                    System.out.println("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
-                    scanner.next();
-                    error = true;
-                }
-            } while (error);
-                
-            if (resposta < 0 || resposta > NR_REFRANYS - 1) {
-                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
-            }
-        } while (resposta < 0 || resposta > NR_REFRANYS - 1);
-        tempsFinal = System.currentTimeMillis() - tempsInici;
-        tempsTotal += tempsFinal / 1000.0;
-            
-        return resposta;
-    }
-    
-    private void validarRespostaSig(String significat, String refrany_significat) {
-        if (refrany_significat.equals(significat)) {
-            System.out.println("Correcte!");
-            encerts++;
-        } else {
-            System.out.println("Incorrecte!");
-        }
-    }
-    
-    private boolean jugarPartida(Jugador jugador) {
+        private boolean jugarPartida(Jugador jugador) {
         boolean resultat;
         encerts = 0;
         tempsTotal = 0;
@@ -295,8 +175,8 @@ public class ProgrammingTarnished_Refranys {
         refranysPassador = refranys;
         return refranysPassador;
     }
-
-    private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
+    
+        private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
         System.out.printf("\nREFRANYS CATALANS\nRelaciona l'inici d'aquests refranys catalans amb la seva part corresponent:\n-------------------------------------------------------------------------------------\n");
         for (int i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-36s  | %d - %-36s %n",
@@ -314,6 +194,46 @@ public class ProgrammingTarnished_Refranys {
             validarResposta(primeres.get(i), segones.get(resposta), refranys);
         }
     }
+    
+    private void demanarJugadesSig(ArrayList<String> significats) {
+        int resposta;
+        
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("Selecciona el significat del refrany -> (%s): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
+            resposta = Jugada();
+            validarRespostaSig(significats.get(resposta), refranysSeleccionats.get(i).getSignificat());
+        }
+    }
+    
+    private int Jugada() {
+        double tempsInici;
+        double tempsFinal;
+        int resposta;
+        tempsInici = System.currentTimeMillis();
+        
+        resposta = 0;
+        do {
+            boolean error;
+            do {
+                try {
+                    error = false;
+                    resposta = scanner.nextInt() - 1;
+                } catch (InputMismatchException ex) {
+                    System.out.println("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                    scanner.next();
+                    error = true;
+                }
+            } while (error);
+                
+            if (resposta < 0 || resposta > NR_REFRANYS - 1) {
+                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+            }
+        } while (resposta < 0 || resposta > NR_REFRANYS - 1);
+        tempsFinal = System.currentTimeMillis() - tempsInici;
+        tempsTotal += tempsFinal / 1000.0;
+            
+        return resposta;
+    }
 
     private void validarResposta(String primera, String respostaUsuari, ArrayList<Refrany> refranys) {
         for (Refrany refrany : refranys) {
@@ -325,15 +245,94 @@ public class ProgrammingTarnished_Refranys {
         }
         System.out.println("Incorrecte!");
     }
+    
+    private void validarRespostaSig(String significat, String refrany_significat) {
+        if (refrany_significat.equals(significat)) {
+            System.out.println("Correcte!");
+            encerts++;
+        } else {
+            System.out.println("Incorrecte!");
+        }
+    }
 
     private void mostrarResultats() {
         int errors;
         errors = NR_REFRANYS - encerts;
         System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", encerts, errors, tempsTotal);
     }
-
+    
+    private boolean jugarIndividual() {
+        int resposta;
+        
+        System.out.print("\nVols jugar de manera individual o amb parelles? (1/2): ");
+        resposta = 0;
+        do {
+            resposta = scanner.nextInt();
+            if (resposta!=1 && resposta!=1 && resposta!=2) {
+                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+            }
+        } while (resposta!=1 && resposta!=1 && resposta!=2);
+        return resposta == 1;
+    }
+            
+    private boolean segonaFase () {
+        encerts = 0;
+        boolean resultat;
+        
+        ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
+        
+        for (int i = 0; i < NR_REFRANYS ; i++) {
+            significats.add(refranysSeleccionats.get(i).getSignificat());
+        }
+        
+        Collections.shuffle(significats);
+        
+        System.out.printf("\nREFRANYS CATALANS\nRelaciona els refranys amb el seu significat corresponent:\n-------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%-70s | %d - %s %n",
+                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(),(i+1), significats.get(i));
+        }
+        System.out.println("-----------------------------------------------------------------------------------------");
+        demanarJugadesSig(significats);
+        
+        if (encerts != 5) {
+            resultat = tornarAJugar();
+        } else {
+            resultat = false;
+        }
+        
+        return resultat;
+    }
+                
+    private void mostrarSolucio() {
+        String resposta;
+        scanner.nextLine();
+        System.out.println("\nPremi \"Enter\" per continuar...");
+        resposta = scanner.nextLine();
+        System.out.printf("\nSOLUCIONS DELS REFRANYS\n-------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%s %n",
+                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
+        }
+        System.out.println("-------------------------------------------------------------------------------------");
+    }
+    
+    private void mostrarSolucioSig() {
+        System.out.printf("\nSOLUCIONS DELS SIGNIFICATS\n-------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%s: %s %n",
+                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(), refranysSeleccionats.get(i).getSignificat());
+        }
+        System.out.println("-------------------------------------------------------------------------------------");
+    }
+    
     private boolean tornarAJugar() {
         System.out.println("\nVols jugar una altra partida? (Sí / No)");
+        return siNo();
+    }
+    
+    private boolean passarASeguentFase() {
+        System.out.println("\nVols jugar a emparellar refranys amb el seu significat? (Sí / No)");
         return siNo();
     }
     
