@@ -160,6 +160,8 @@ public class ProgrammingTarnished_Refranys {
         tempsTotal = 0;
         int i;
         
+        refranysSeleccionats = null;
+        
         if (refranysSeleccionats == null) {
             refranysSeleccionats = seleccionarRefranys();
         }
