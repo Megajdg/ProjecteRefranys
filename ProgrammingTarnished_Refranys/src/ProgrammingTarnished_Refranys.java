@@ -45,10 +45,16 @@ public class ProgrammingTarnished_Refranys {
         do {
             jugarDeNou = jugarPartida();
         } while (jugarDeNou);
+        if (encerts != 5) {
+            mostrarSolucio();
+        }
         if (passarASeguentFase()) {
             do {
                 jugarDeNou = segonaFase();
             } while (jugarDeNou);
+            if (encerts != 5) {
+                mostrarSolucioSig();
+            }
         }
         System.out.println("Gràcies per jugar!");
     }
@@ -57,6 +63,24 @@ public class ProgrammingTarnished_Refranys {
         System.out.println("\nVols passar a la seguent fase? (Sí/No)");
         String resposta = scanner.next().trim().toLowerCase();
         return resposta.equals("sí­") || resposta.equals("si");
+    }
+    
+    private void mostrarSolucio() {
+        System.out.printf("\nREFRANYS SOLUCIONATS\n-------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%s %n",
+                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
+        }
+        System.out.println("-------------------------------------------------------------------------------------");
+    }
+    
+    private void mostrarSolucioSig() {
+        System.out.printf("\nREFRANYS I SIGNIFICATS SOLUCIONATS\n-------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("%s: %s %n",
+                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(), refranysSeleccionats.get(i).getSignificat());
+        }
+        System.out.println("-------------------------------------------------------------------------------------");
     }
     
     private boolean segonaFase () {
@@ -71,7 +95,7 @@ public class ProgrammingTarnished_Refranys {
         
         Collections.shuffle(significats);
         
-        System.out.println("LLISTAT DE LES PARTS DELS REFRANYS SEPARATS I BARREGATS.");
+        System.out.printf("\nLLISTAT DELS SIGNIFICATS DELS REFRANYS BARREGATS.\nRelaciona el refrany amb el significat corresponent:\n-------------------------------------------------------------------------------------\n");
         for (int i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-70s | %d - %s %n",
                     refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(),(i+1), significats.get(i));
@@ -89,14 +113,36 @@ public class ProgrammingTarnished_Refranys {
     }
     
     private void demanarJugadesSig(ArrayList<String> significats) {
+        double tempsInici;
+        int resposta;
+        double tempsFinal;
+        
+        resposta = 0;
         for (int i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("Selecciona el significat del refrany -> (%s): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
-            long tempsInici = System.currentTimeMillis();
-            int resposta = scanner.nextInt() - 1;
-            long tempsFinal = System.currentTimeMillis() - tempsInici;
+            tempsInici = System.currentTimeMillis();
+            do {
+                boolean error;
+                do {
+                    try {
+                        error = false;
+                        resposta = scanner.nextInt() - 1;
+                    } catch (InputMismatchException ex) {
+                        System.out.println("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                        scanner.next();
+                        error = true;
+                    }
+                } while (error);
+                
+                if (resposta < 0 || resposta > NR_REFRANYS - 1) {
+                    System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                }
+            } while (resposta < 0 || resposta > NR_REFRANYS - 1);
+            tempsFinal = System.currentTimeMillis() - tempsInici;
             tempsTotal += tempsFinal / 1000.0;
             validarRespostaSig(significats.get(resposta), refranysSeleccionats.get(i).getSignificat());
         }
+        
     }
     
     private void validarRespostaSig(String significat, String refrany_significat) {
@@ -244,7 +290,7 @@ public class ProgrammingTarnished_Refranys {
         do {
             resposta = scanner.next().trim().toLowerCase();
             if (!resposta.equals("sí") && !resposta.equals("si") && !resposta.equals("no")) {
-                System.out.printf("La resposta introduÃ¯da no Ã©s vÃ lida. Si us plau, torni a provar: ");
+                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
             }
         } while (!resposta.equals("sí") && !resposta.equals("si") && !resposta.equals("no"));
         return resposta.equals("sí­") || resposta.equals("si");
