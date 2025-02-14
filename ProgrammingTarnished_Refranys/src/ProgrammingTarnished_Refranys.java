@@ -32,10 +32,10 @@ class Refrany {
 
 class Jugador {
     private int idJugador;
-    private int tempsPuntuacio;
+    private double tempsPuntuacio;
     private int encertsPuntuacio;
     
-    public Jugador(int idJugador, int tempsPuntuacio, int encertsPuntuacio) {
+    public Jugador(int idJugador, double tempsPuntuacio, int encertsPuntuacio) {
         this.idJugador = idJugador;
         this.tempsPuntuacio = tempsPuntuacio;
         this.encertsPuntuacio = encertsPuntuacio;
@@ -43,6 +43,22 @@ class Jugador {
     
     public int getId() {
         return idJugador;
+    }
+    
+    public void setEncerts(int encerts) {
+        this.encertsPuntuacio += encerts;
+    }
+    
+    public void setTemps(double temps) {
+        this.tempsPuntuacio += temps;
+    }
+    
+    public int getEncerts() {
+        return encertsPuntuacio;
+    }
+    
+    public double getTemps() {
+        return tempsPuntuacio;
     }
 }
 
@@ -54,65 +70,82 @@ public class ProgrammingTarnished_Refranys {
     private final Scanner scanner = new Scanner(System.in);
     private double tempsTotal;
     private int encerts;
+    private boolean mode2Jugadors;
+    private int jugadorActual = 0;
     private int nPartides;
     private ArrayList<Refrany> refranysSeleccionats;
     
     public void iniciarJoc() {
         boolean jugarDeNou;
         nPartides = 0;
+        ArrayList<Jugador> jugadors = new ArrayList<>();
         if (jugarIndividual()) {
-            
+            mode2Jugadors = false;
             System.out.println("--------------------------------");
             System.out.println("        MODE INDIVIDUAL");
             System.out.println("--------------------------------");
-            Jugador j1 = new Jugador(1, 0,0);
-            
+            jugadors.add(new Jugador(1, 0, 0));
+            jugadorActual = 1;
             do {
-                 jugarDeNou = jugarPartida(j1);
-             } while (jugarDeNou);
-             if (encerts != 5) {
-                 mostrarSolucio();
-             }
-             if (passarASeguentFase()) {
-                 do {
-                     jugarDeNou = segonaFase();
-                 } while (jugarDeNou);
-                 if (encerts != 5) {
-                     mostrarSolucioSig();
-                 }
-             } 
+                 jugarDeNou = jugarPartida(jugadors);
+            } while (jugarDeNou);
+            if (encerts != 5) {
+                mostrarSolucio();
+            }
+            if (passarASeguentFase()) {
+                do {
+                    jugarDeNou = segonaFase(jugadors);
+                } while (jugarDeNou);
+                if (encerts != 5) {
+                    mostrarSolucioSig();
+                }
+            } 
         } else {
+            mode2Jugadors = true;
             System.out.println("--------------------------------");
             System.out.println("        MODE COOPERATIU");
             System.out.println("--------------------------------");
-            ArrayList<Jugador> jugadors = new ArrayList<>();
+            
             for (int i = 0; i < NR_JUGADORS; i++) {
                 jugadors.add(new Jugador((i+1), 0, 0));
             }
             
-            for (int i = 0; i < NR_JUGADORS; i++) {
-                jugarPartida(jugadors.get(0));
+            while (jugadorActual < 2) {
+                jugadorActual++;
+                nPartides = 0;
+                jugarPartida(jugadors);
+                jugadors.get(jugadorActual-1).setEncerts(encerts);
+                jugadors.get(jugadorActual-1).setTemps(tempsTotal);
+                segonaFase(jugadors);
+                jugadors.get(jugadorActual-1).setEncerts(encerts);
+                jugadors.get(jugadorActual-1).setTemps(tempsTotal);
             }
+            
+            mostrarResultats2Jug(jugadors);
+            
+            
         }
         System.out.println("\nGràcies per jugar!");
     }
     
-        private boolean jugarPartida(Jugador jugador) {
-        boolean resultat;
-        encerts = 0;
-        tempsTotal = 0;
+    private boolean jugarPartida(ArrayList<Jugador> jugadors) {
+        boolean resultat = false;
+        
+            encerts = 0;
+            tempsTotal = 0;
+        
         
         if (refranysSeleccionats == null) {
             refranysSeleccionats = seleccionarRefranys();
         }
         
-        if (nPartides == 0) {
-            System.out.println("---------------");
-            System.out.printf(" JUGADOR: (%d) \n", jugador.getId());
+        if (nPartides == 0 && mode2Jugadors) {
+            System.out.printf("\n---------------\n");
+            System.out.printf(" JUGADOR: (%d) \n", jugadorActual);
             System.out.println("---------------");
         }
         
-
+        
         
         ArrayList<String> primeres = new ArrayList<>();
         ArrayList<String> segones = new ArrayList<>();
@@ -125,11 +158,15 @@ public class ProgrammingTarnished_Refranys {
         mostrarRefranys(primeres, segones);
         demanarJugades(primeres, segones, refranysSeleccionats);
         mostrarResultats();
-        if (encerts != 5 && nPartides == 0) {
-            resultat = tornarAJugar();
-        } else {
-            resultat = false;
-        }
+        if (jugadors.size() == 1) {
+            if (encerts != 5 && nPartides == 0) {
+                resultat = tornarAJugar();
+            } else {
+                resultat = false;
+            }
+        } 
+         
+        
         nPartides++;
         return resultat;
     }
@@ -261,6 +298,39 @@ public class ProgrammingTarnished_Refranys {
         System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", encerts, errors, tempsTotal);
     }
     
+    private void mostrarResultats2Jug(ArrayList<Jugador> jugadors) {
+        
+        for (int i = 0; i < jugadors.size(); i++) {
+            System.out.printf("\n---------------\n");
+            System.out.printf(" JUGADOR: (%d)  \n", (i+1));
+            System.out.println("---------------");
+            System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", jugadors.get(i).getEncerts(), (NR_REFRANYS*2 - jugadors.get(i).getEncerts()), jugadors.get(i).getTemps());
+        }
+        
+        System.out.println("");
+        if (jugadors.get(0).getEncerts() > jugadors.get(1).getEncerts()) {
+            System.out.println("---------------------------");
+            System.out.println("  JUGADOR (1): HA GUANYAT");
+            System.out.println("---------------------------");
+        } else if (jugadors.get(0).getEncerts() == jugadors.get(1).getEncerts()) {
+            if (jugadors.get(0).getEncerts() > jugadors.get(1).getEncerts()) {
+                System.out.println("---------------------------");
+                System.out.println("  JUGADOR (1): HA GUANYAT");
+                System.out.println("---------------------------");
+            } else {
+                System.out.println("---------------------------");
+                System.out.println("  JUGADOR (2): HA GUANYAT");
+                System.out.println("---------------------------");
+            }
+        } else {
+            System.out.println("---------------------------");
+            System.out.println("  JUGADOR (2): HA GUANYAT");
+            System.out.println("---------------------------");
+        }
+        
+
+    }
+    
     private boolean jugarIndividual() {
         int resposta;
         
@@ -275,9 +345,12 @@ public class ProgrammingTarnished_Refranys {
         return resposta == 1;
     }
             
-    private boolean segonaFase () {
-        encerts = 0;
-        boolean resultat;
+    private boolean segonaFase (ArrayList<Jugador> jugadors) {
+        
+            encerts = 0;
+            tempsTotal = 0;
+        
+        boolean resultat = false;
         
         ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
         
@@ -294,11 +367,14 @@ public class ProgrammingTarnished_Refranys {
         }
         System.out.println("-----------------------------------------------------------------------------------------");
         demanarJugadesSig(significats);
+        mostrarResultats();
         
-        if (encerts != 5) {
-            resultat = tornarAJugar();
-        } else {
-            resultat = false;
+        if (jugadors.size() == 1) {
+            if (encerts != 5 && nPartides == 0) {
+                resultat = tornarAJugar();
+            } else {
+                resultat = false;
+            }
         }
         
         return resultat;
