@@ -75,6 +75,31 @@ public class ProgrammingTarnished_Refranys {
     private int nPartides;
     private ArrayList<Refrany> refranysSeleccionats;
     
+    private boolean jugarIndividual() {
+        int resposta;
+        
+        System.out.printf("REFRANYS CATALANS\n\nModes de Joc:\n1.Un jugador\n2.Dos jugadors\nIntrodueixi el mode que vol jugar (1 / 2): ");
+        resposta = 0;
+        do {
+            boolean error;
+            do {
+                try {
+                    error = false;
+                    resposta = scanner.nextInt();
+                } catch (InputMismatchException ex) {
+                    System.out.println("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+                    scanner.next();
+                    error = true;
+                }
+            } while (error);
+                
+            if (resposta != 1 && resposta != 2) {
+                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
+            }
+        } while (resposta != 1 && resposta != 2);
+        return resposta == 1;
+    }
+    
     public void iniciarJoc() {
         boolean jugarDeNou;
         int i;
@@ -82,7 +107,7 @@ public class ProgrammingTarnished_Refranys {
         ArrayList<Jugador> jugadors = new ArrayList<>();
         if (jugarIndividual()) {
             mode2Jugadors = false;
-            System.out.println("--------------------------------");
+            System.out.println("\n--------------------------------");
             System.out.println("        MODE INDIVIDUAL");
             System.out.println("--------------------------------");
             jugadors.add(new Jugador(1, 0, 0));
@@ -93,6 +118,7 @@ public class ProgrammingTarnished_Refranys {
             if (encerts != 5) {
                 mostrarSolucio();
             }
+            nPartides = 0;
             if (passarASeguentFase()) {
                 do {
                     jugarDeNou = segonaFase(jugadors);
@@ -331,22 +357,7 @@ public class ProgrammingTarnished_Refranys {
         }
         
 
-    }
-    
-    private boolean jugarIndividual() {
-        int resposta;
-        
-        System.out.print("\nVols jugar de manera individual o amb parelles? (1/2): ");
-        resposta = 0;
-        do {
-            resposta = scanner.nextInt();
-            if (resposta!=1 && resposta!=1 && resposta!=2) {
-                System.out.printf("La resposta introduïda no és vàlida. Si us plau, torni a provar: ");
-            }
-        } while (resposta!=1 && resposta!=1 && resposta!=2);
-        return resposta == 1;
-    }
-            
+    }            
 
     private boolean segonaFase (ArrayList<Jugador> jugadors) {
         boolean resultat = false;
