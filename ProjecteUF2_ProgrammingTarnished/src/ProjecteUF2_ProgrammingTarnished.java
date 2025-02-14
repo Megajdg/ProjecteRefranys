@@ -6,6 +6,10 @@ class Refrany {
     private final String segonaMeitat;
     private final String significat;
 
+    /*
+    * Constructor per crear un nou refrany amb un id, la primera i segona meitat
+    * del refrany, i el seu significat. Ens ajuda a instanciar objectes de tipus Refrany.
+    */
     public Refrany(int id, String primera, String segona, String significat) {
         this.id = id;
         this.primeraMeitat = primera;
@@ -13,18 +17,33 @@ class Refrany {
         this.significat = significat;
     }
 
+    /*
+    * Simple getter que retorna l'identificador del refrany.
+    * Ens serveix per saber quin refrany estem manejant.
+    */
     public int getId() {
         return id;
     }
-
+    
+    /*
+    * Torna la primera meitat del refrany. Ens ajuda a obtenir la
+    * primera part per mostrar-la i comparar-la després amb la segona meitat.
+    */
     public String getPrimeraMeitat() {
         return primeraMeitat;
     }
-
+    
+    /*
+    * Torna la segona meitat del refrany. Similar a getPrimeraMeitat(), però per la part que falta.
+    */
     public String getSegonaMeitat() {
         return segonaMeitat;
     }
     
+    /*
+    * Torna el significat del refrany. És útil per mostrar el significat quan
+    * el jugador ho demana o per verificar les respostes a la segona fase del joc.
+    */
     public String getSignificat() {
         return significat;
     }
@@ -35,28 +54,51 @@ class Jugador {
     private double tempsPuntuacio;
     private int encertsPuntuacio;
     
+    /*
+    * Constructor per crear un jugador amb un identificador, temps de puntuació
+    * i nombre d'encerts. Així gestionem les estadístiques de cada jugador.
+    */
     public Jugador(int idJugador, double tempsPuntuacio, int encertsPuntuacio) {
         this.idJugador = idJugador;
         this.tempsPuntuacio = tempsPuntuacio;
         this.encertsPuntuacio = encertsPuntuacio;
     }
     
+    /*
+    * Retorna l'identificador del jugador. És essencial per saber quin jugador és el que està jugant.
+    */
     public int getId() {
         return idJugador;
     }
     
+    /*
+    * Suma els encerts del jugador. Aquest mètode ens permet actualitzar
+    * el nombre d'encerts quan el jugador encerta una resposta.
+    */
     public void setEncerts(int encerts) {
         this.encertsPuntuacio += encerts;
     }
     
+    /*
+    * Suma el temps de puntuació del jugador. Ens ajuda a acumular el
+    * temps total que ha passat el jugador jugant.
+    */
     public void setTemps(double temps) {
         this.tempsPuntuacio += temps;
     }
     
+    /*
+    * Torna el nombre total d'encerts d'un jugador. Utilitzat per veure
+    * quants encerts ha fet un jugador durant la partida.
+    */
     public int getEncerts() {
         return encertsPuntuacio;
     }
     
+    /*
+    * Torna el temps total de puntuació d'un jugador. Ens diu quant temps
+    * ha trigat el jugador en completar la partida.
+    */
     public double getTemps() {
         return tempsPuntuacio;
     }
@@ -75,6 +117,10 @@ public class ProjecteUF2_ProgrammingTarnished {
     private int nPartides;
     private ArrayList<Refrany> refranysSeleccionats;
     
+    /*
+    * Mètode que gestiona la selecció del mode de joc, si és a un jugador
+    * o a dos. Ens permet obtenir la selecció del jugador, assegurant-nos que la resposta sigui vàlida.
+    */
     private boolean jugarIndividual() {
         int resposta;
         
@@ -100,6 +146,10 @@ public class ProjecteUF2_ProgrammingTarnished {
         return resposta == 1;
     }
     
+    /*
+    * Mètode que inicia el joc. Aquí es defineix si el jugador vol jugar a mode individual
+    * o en mode dos jugadors, i es criden les funcions necessàries per començar el joc.
+    */
     public void iniciarJoc() {
         boolean jugarDeNou;
         int i;
@@ -153,7 +203,10 @@ public class ProjecteUF2_ProgrammingTarnished {
         System.out.println("\nGràcies per jugar!");
     }
 
-        
+    /*
+    * Gestiona una partida individual, amb la lògica per mostrar les mitges de
+    * refranys i obtenir les respostes del jugador. També actualitza els resultats d'encerts i temps.
+    */
     private boolean jugarPartida(ArrayList<Jugador> jugadors) {
         boolean resultat = false;
         encerts = 0;
@@ -169,9 +222,7 @@ public class ProjecteUF2_ProgrammingTarnished {
             System.out.printf(" JUGADOR: (%d) \n", jugadorActual);
             System.out.println("---------------");
         }
-        
-        
-        
+
         ArrayList<String> primeres = new ArrayList<>();
         ArrayList<String> segones = new ArrayList<>();
         for (i = 0; i < NR_REFRANYS; i++) {
@@ -191,11 +242,14 @@ public class ProjecteUF2_ProgrammingTarnished {
             }
         } 
          
-        
         nPartides++;
         return resultat;
     }
-
+    
+    /*
+    * Selecciona aleatòriament un conjunt de refranys i els emmagatzema
+    * en una llista. Això genera la base de dades de refranys que es faran servir durant el joc.
+    */
     private ArrayList<Refrany> seleccionarRefranys() {
         int i;
         String[] primeresText = {
@@ -239,6 +293,9 @@ public class ProjecteUF2_ProgrammingTarnished {
         return refranysPassador;
     }
     
+    /*
+    * Mostra al jugador les primeres i segones meitats dels refranys per tal que les relacioni correctament.
+    */
     private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
         int i;
         
@@ -249,7 +306,10 @@ public class ProjecteUF2_ProgrammingTarnished {
         }
         System.out.println("-------------------------------------------------------------------------------------");
     }
-
+    
+    /*
+    * Demana a l'usuari que selecciona la segona meitat del refrany. També valida si la resposta és correcta.
+    */
     private void demanarJugades(ArrayList<String> primeres, ArrayList<String> segones, ArrayList<Refrany> refranys) {
         int resposta, i;
         
@@ -260,6 +320,9 @@ public class ProjecteUF2_ProgrammingTarnished {
         }
     }
     
+    /*
+    * Similar a demanarJugades(), però en aquesta fase els jugadors han de relacionar el refrany amb el seu significat.
+    */
     private void demanarJugadesSig(ArrayList<String> significats) {
         int resposta, i;
         
@@ -270,6 +333,9 @@ public class ProjecteUF2_ProgrammingTarnished {
         }
     }
     
+    /*
+    * Gestiona la jugada d'un jugador. Llegeix la resposta del jugador, valida la seva entrada i calcula el temps que ha trigat a respondre.
+    */
     private int Jugada() {
         double tempsInici;
         double tempsFinal;
@@ -299,7 +365,10 @@ public class ProjecteUF2_ProgrammingTarnished {
             
         return resposta;
     }
-
+    
+    /*
+    * Comprova si la resposta del jugador és correcta comparant-la amb el refrany seleccionat.
+    */
     private void validarResposta(String primera, String respostaUsuari, ArrayList<Refrany> refranys) {
         for (Refrany refrany : refranys) {
             if (refrany.getPrimeraMeitat().equals(primera) && refrany.getSegonaMeitat().equals(respostaUsuari)) {
@@ -311,6 +380,9 @@ public class ProjecteUF2_ProgrammingTarnished {
         System.out.println("Incorrecte!");
     }
     
+    /*
+    * Comprova si la resposta sobre el significat del refrany és correcta.
+    */
     private void validarRespostaSig(String significat, String refrany_significat) {
         if (refrany_significat.equals(significat)) {
             System.out.println("Correcte!");
@@ -320,12 +392,19 @@ public class ProjecteUF2_ProgrammingTarnished {
         }
     }
 
+    /*
+    * Mostra els resultats de la partida: el nombre d'encerts, errors i el temps total que ha trigat el jugador.
+    */
     private void mostrarResultats() {
         int errors;
         errors = NR_REFRANYS - encerts;
         System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", encerts, errors, tempsTotal);
     }
     
+    /*
+    * Mostra els resultats comparatius entre dos jugadors (en mode multijugador),
+    * amb el nombre d'encerts, errors i temps de cada jugador. També decideix qui ha guanyat la partida.
+    */
     private void mostrarResultats2Jug(ArrayList<Jugador> jugadors) {
         System.out.println("------------------------------------------------------");
         System.out.printf("%-25s | %-25s \n", "JUGADOR (1)", "JUGADOR (2)");
@@ -358,7 +437,11 @@ public class ProjecteUF2_ProgrammingTarnished {
         
 
     }            
-
+    
+    /*
+    * Gestiona la segona fase del joc, on els jugadors han de relacionar
+    * els refranys amb els seus significats. Aquest mètode també actualitza els resultats del jugador.
+    */
     private boolean segonaFase (ArrayList<Jugador> jugadors) {
         boolean resultat = false;
         encerts = 0;
@@ -393,7 +476,10 @@ public class ProjecteUF2_ProgrammingTarnished {
         
         return resultat;
     }
-                
+    
+    /*
+    * Mostra les solucions finals dels refranys. És útil per donar retroalimentació al jugador després de la partida.
+    */
     private void mostrarSolucio() {
         String resposta;
         int i;
@@ -409,16 +495,25 @@ public class ProjecteUF2_ProgrammingTarnished {
         System.out.println("-------------------------------------------------------------------------------------");
     }
     
+    /*
+    * Pregunta al jugador si vol jugar una altra partida. Si la resposta és "sí", torna a començar la partida.
+    */
     private boolean tornarAJugar() {
         System.out.println("\nVols jugar una altra partida? (Sí / No)");
         return siNo();
     }
     
+    /*
+    * Pregunta al jugador si vol passar a la segona fase, on s'han de relacionar els refranys amb els seus significats.
+    */
     private boolean passarASeguentFase() {
         System.out.println("\nVols jugar a emparellar refranys amb el seu significat? (Sí / No)");
         return siNo();
     }
     
+    /*
+    * Funció per obtenir una resposta sí/no del jugador, que és cridada en diversos punts del joc per obtenir respostes de l'usuari.
+    */
     private boolean siNo() {
         String resposta;
         resposta = "";
@@ -431,6 +526,9 @@ public class ProjecteUF2_ProgrammingTarnished {
         return resposta.equals("sí­") || resposta.equals("si");
     }
 
+    /*
+    * Mètode principal que inicialitza el joc. Crida a iniciarJoc() per començar la partida.
+    */
     public static void main(String[] args) {
         new ProjecteUF2_ProgrammingTarnished().iniciarJoc();
     }
