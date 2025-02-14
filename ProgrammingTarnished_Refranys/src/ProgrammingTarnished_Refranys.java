@@ -108,7 +108,7 @@ public class ProgrammingTarnished_Refranys {
         if (jugarIndividual()) {
             mode2Jugadors = false;
             System.out.println("\n--------------------------------");
-            System.out.println("        MODE INDIVIDUAL");
+            System.out.println("        MODE UN JUGADOR");
             System.out.println("--------------------------------");
             jugadors.add(new Jugador(1, 0, 0));
             jugadorActual = 1;
@@ -127,7 +127,7 @@ public class ProgrammingTarnished_Refranys {
         } else {
             mode2Jugadors = true;
             System.out.println("--------------------------------");
-            System.out.println("        MODE COOPERATIU");
+            System.out.println("        MODE DOS JUGADORS");
             System.out.println("--------------------------------");
 
             
@@ -327,21 +327,21 @@ public class ProgrammingTarnished_Refranys {
     }
     
     private void mostrarResultats2Jug(ArrayList<Jugador> jugadors) {
-        
-        for (int i = 0; i < jugadors.size(); i++) {
-            System.out.printf("\n---------------\n");
-            System.out.printf(" JUGADOR: (%d)  \n", (i+1));
-            System.out.println("---------------");
-            System.out.printf("\nEncerts: %d%nErrors: %d%nTemps total: %.2f segons%n", jugadors.get(i).getEncerts(), (NR_REFRANYS*2 - jugadors.get(i).getEncerts()), jugadors.get(i).getTemps());
-        }
+        System.out.println("------------------------------------------------------");
+        System.out.printf("%-25s | %-25s \n", "JUGADOR (1)", "JUGADOR (2)");
+        System.out.println("------------------------------------------------------");
+        System.out.printf("%-25s | %-25s\n", "Encerts: "+jugadors.get(0).getEncerts(), "Encerts: "+jugadors.get(1).getEncerts());
+        System.out.printf("%-25s | %-25s\n", "Errors: "+(NR_REFRANYS*2 - jugadors.get(0).getEncerts()), "Errors: "+(NR_REFRANYS*2 - jugadors.get(1).getEncerts()));
+        System.out.printf("%-25s | %-25s\n", "Temps total: "+ (float) jugadors.get(0).getTemps(), "Temps total: "+ (float) jugadors.get(1).getTemps());
+
         
         System.out.println("");
-        if (jugadors.get(0).getEncerts() > jugadors.get(1).getEncerts()) {
+        if (jugadors.get(0).getEncerts() < jugadors.get(1).getEncerts()) {
             System.out.println("---------------------------");
             System.out.println("  JUGADOR (1): HA GUANYAT");
             System.out.println("---------------------------");
         } else if (jugadors.get(0).getEncerts() == jugadors.get(1).getEncerts()) {
-            if (jugadors.get(0).getEncerts() > jugadors.get(1).getEncerts()) {
+            if (jugadors.get(0).getTemps() < jugadors.get(1).getTemps()) {
                 System.out.println("---------------------------");
                 System.out.println("  JUGADOR (1): HA GUANYAT");
                 System.out.println("---------------------------");
