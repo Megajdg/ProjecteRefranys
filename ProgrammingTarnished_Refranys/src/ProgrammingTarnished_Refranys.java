@@ -136,6 +136,7 @@ public class ProgrammingTarnished_Refranys {
             }
             
             while (jugadorActual < 2) {
+                refranysSeleccionats = null;
                 jugadorActual++;
                 nPartides = 0;
                 jugarPartida(jugadors);
