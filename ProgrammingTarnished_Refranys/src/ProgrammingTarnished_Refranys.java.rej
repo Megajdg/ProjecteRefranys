@@ -1,0 +1,10 @@
+diff a/ProgrammingTarnished_Refranys/src/ProgrammingTarnished_Refranys.java b/ProgrammingTarnished_Refranys/src/ProgrammingTarnished_Refranys.java	(rejected hunks)
+@@ -52,7 +52,7 @@
+     }
+     
+     private boolean passarASeguentFase() {
+-        System.out.println("\nVols passar a la seguent fase? (S�/No)");
++        System.out.println("\nVols passar a la seguent fase? (S� / No)");
+         String resposta = scanner.next().trim().toLowerCase();
+         return resposta.equals("s�") || resposta.equals("si");
+     }
