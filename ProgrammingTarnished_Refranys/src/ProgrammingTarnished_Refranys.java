@@ -77,6 +77,7 @@ public class ProgrammingTarnished_Refranys {
     
     public void iniciarJoc() {
         boolean jugarDeNou;
+        int i;
         nPartides = 0;
         ArrayList<Jugador> jugadors = new ArrayList<>();
         if (jugarIndividual()) {
@@ -87,7 +88,7 @@ public class ProgrammingTarnished_Refranys {
             jugadors.add(new Jugador(1, 0, 0));
             jugadorActual = 1;
             do {
-                 jugarDeNou = jugarPartida(jugadors);
+                jugarDeNou = jugarPartida(jugadors);
             } while (jugarDeNou);
             if (encerts != 5) {
                 mostrarSolucio();
@@ -96,17 +97,15 @@ public class ProgrammingTarnished_Refranys {
                 do {
                     jugarDeNou = segonaFase(jugadors);
                 } while (jugarDeNou);
-                if (encerts != 5) {
-                    mostrarSolucioSig();
-                }
             } 
         } else {
             mode2Jugadors = true;
             System.out.println("--------------------------------");
             System.out.println("        MODE COOPERATIU");
             System.out.println("--------------------------------");
+
             
-            for (int i = 0; i < NR_JUGADORS; i++) {
+            for (i = 0; i < NR_JUGADORS; i++) {
                 jugadors.add(new Jugador((i+1), 0, 0));
             }
             
@@ -127,13 +126,13 @@ public class ProgrammingTarnished_Refranys {
         }
         System.out.println("\nGràcies per jugar!");
     }
-    
+
+        
     private boolean jugarPartida(ArrayList<Jugador> jugadors) {
         boolean resultat = false;
-        
-            encerts = 0;
-            tempsTotal = 0;
-        
+        encerts = 0;
+        tempsTotal = 0;
+        int i;
         
         if (refranysSeleccionats == null) {
             refranysSeleccionats = seleccionarRefranys();
@@ -149,7 +148,7 @@ public class ProgrammingTarnished_Refranys {
         
         ArrayList<String> primeres = new ArrayList<>();
         ArrayList<String> segones = new ArrayList<>();
-        for (int i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS; i++) {
             primeres.add(refranysSeleccionats.get(i).getPrimeraMeitat());
             segones.add(refranysSeleccionats.get(i).getSegonaMeitat());
         }
@@ -172,6 +171,7 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private ArrayList<Refrany> seleccionarRefranys() {
+        int i;
         String[] primeresText = {
             "Qui no vulgui pols", "No diguis blat", "A la taula i al llit", "Tal faràs,", "Qui dia passa,",
             "A l'estiu", "De porc i de senyor", "Hostes vingueren", "De mica en mica", "Al pot petit",
@@ -203,7 +203,7 @@ public class ProgrammingTarnished_Refranys {
             "Si no hi ha els mitjans, els recursos o les condicions necessàries per obtenir alguna cosa, simplement no es pot aconseguir. Les expectatives han de ser realistes segons les circumstàncies."
         };
         ArrayList<Refrany> refranys = new ArrayList<>();
-        for (int i = 0; i < NR_REFRANYS_TOTALS; i++) {
+        for (i = 0; i < NR_REFRANYS_TOTALS; i++) {
             refranys.add(new Refrany(i, primeresText[i], segonesText[i], significatsText[i]));
         }
         Collections.shuffle(refranys);
@@ -213,9 +213,11 @@ public class ProgrammingTarnished_Refranys {
         return refranysPassador;
     }
     
-        private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
+    private void mostrarRefranys(ArrayList<String> primeres, ArrayList<String> segones) {
+        int i;
+        
         System.out.printf("\nREFRANYS CATALANS\nRelaciona l'inici d'aquests refranys catalans amb la seva part corresponent:\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-36s  | %d - %-36s %n",
                     primeres.get(i), (i + 1), segones.get(i));
         }
@@ -223,9 +225,9 @@ public class ProgrammingTarnished_Refranys {
     }
 
     private void demanarJugades(ArrayList<String> primeres, ArrayList<String> segones, ArrayList<Refrany> refranys) {
-        int resposta;
+        int resposta, i;
         
-        for (int i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("Selecciona la segona meitat pel refrany '%s' (1 - %d): ", primeres.get(i), NR_REFRANYS);
             resposta = Jugada();
             validarResposta(primeres.get(i), segones.get(resposta), refranys);
@@ -233,10 +235,10 @@ public class ProgrammingTarnished_Refranys {
     }
     
     private void demanarJugadesSig(ArrayList<String> significats) {
-        int resposta;
+        int resposta, i;
         
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("Selecciona el significat del refrany -> (%s): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
+        for (i = 0; i < NR_REFRANYS; i++) {
+            System.out.printf("Selecciona el significat del refrany '%s' (1 - %d): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(), NR_REFRANYS);
             resposta = Jugada();
             validarRespostaSig(significats.get(resposta), refranysSeleccionats.get(i).getSignificat());
         }
@@ -345,23 +347,23 @@ public class ProgrammingTarnished_Refranys {
         return resposta == 1;
     }
             
+
     private boolean segonaFase (ArrayList<Jugador> jugadors) {
-        
-            encerts = 0;
-            tempsTotal = 0;
-        
         boolean resultat = false;
+        encerts = 0;
+        tempsTotal = 0;
+        int i;
         
         ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
         
-        for (int i = 0; i < NR_REFRANYS ; i++) {
+        for (i = 0; i < NR_REFRANYS ; i++) {
             significats.add(refranysSeleccionats.get(i).getSignificat());
         }
         
         Collections.shuffle(significats);
         
         System.out.printf("\nREFRANYS CATALANS\nRelaciona els refranys amb el seu significat corresponent:\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%-70s | %d - %s %n",
                     refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(),(i+1), significats.get(i));
         }
@@ -376,28 +378,22 @@ public class ProgrammingTarnished_Refranys {
                 resultat = false;
             }
         }
+        nPartides++;
         
         return resultat;
     }
                 
     private void mostrarSolucio() {
         String resposta;
+        int i;
+        
         scanner.nextLine();
         System.out.println("\nPremi \"Enter\" per continuar...");
         resposta = scanner.nextLine();
         System.out.printf("\nSOLUCIONS DELS REFRANYS\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
+        for (i = 0; i < NR_REFRANYS; i++) {
             System.out.printf("%s %n",
                     refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
-    }
-    
-    private void mostrarSolucioSig() {
-        System.out.printf("\nSOLUCIONS DELS SIGNIFICATS\n-------------------------------------------------------------------------------------\n");
-        for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("%s: %s %n",
-                    refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat(), refranysSeleccionats.get(i).getSignificat());
         }
         System.out.println("-------------------------------------------------------------------------------------");
     }
