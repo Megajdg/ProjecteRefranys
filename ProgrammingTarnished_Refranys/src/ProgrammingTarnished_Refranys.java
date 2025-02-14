@@ -45,7 +45,9 @@ public class ProgrammingTarnished_Refranys {
         } while (jugarDeNou);
         
         if (passarASeguentFase()) {
-            segonaFase();
+            do {
+                jugarDeNou = segonaFase();
+            } while (jugarDeNou);
         }
         
         System.out.println("Gràcies per jugar!");
@@ -57,7 +59,10 @@ public class ProgrammingTarnished_Refranys {
         return resposta.equals("sí­") || resposta.equals("si");
     }
     
-    private void segonaFase () {
+    private boolean segonaFase () {
+        encerts = 0;
+        boolean resultat;
+        
         ArrayList<String> significats = new ArrayList<>(NR_REFRANYS);
         
         for (int i = 0; i < NR_REFRANYS ; i++) {
@@ -73,33 +78,36 @@ public class ProgrammingTarnished_Refranys {
         }
         System.out.println("-----------------------------------------------------------------------------------------");
         demanarJugadesSig(significats);
+        
+        if (encerts != 5) {
+            resultat = tornarAJugar();
+        } else {
+            resultat = false;
+        }
+        
+        return resultat;
     }
-    
-   
     
     private void demanarJugadesSig(ArrayList<String> significats) {
         for (int i = 0; i < NR_REFRANYS; i++) {
-            System.out.printf("Selecciona el significat del refrany -> (%d): ", (i+1));
+            System.out.printf("Selecciona el significat del refrany -> (%s): ", refranysSeleccionats.get(i).getPrimeraMeitat() + " " + refranysSeleccionats.get(i).getSegonaMeitat());
             long tempsInici = System.currentTimeMillis();
             int resposta = scanner.nextInt() - 1;
             long tempsFinal = System.currentTimeMillis() - tempsInici;
             tempsTotal += tempsFinal / 1000.0;
-            validarRespostaSig(significats.get(i), significats.get(resposta), refranysSeleccionats);
+            validarRespostaSig(significats.get(resposta), refranysSeleccionats.get(i).getSignificat());
         }
     }
     
-    private void validarRespostaSig(String significat, String respostaUsuari, ArrayList<Refrany> refranys) {
-        for (Refrany refrany : refranys) {
-            if (refrany.getSignificat().equals(significat)) {
-                System.out.println("Correcte!");
-                return;
-            }
+    private void validarRespostaSig(String significat, String refrany_significat) {
+        if (refrany_significat.equals(significat)) {
+            System.out.println("Correcte!");
+            encerts++;
+        } else {
+            System.out.println("Incorrecte!");
         }
-        System.out.println("Incorrecte!");
     }
     
-   
-
     private boolean jugarPartida() {
         boolean resultat;
         encerts = 0;
