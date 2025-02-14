@@ -63,7 +63,7 @@ class Jugador {
 }
 
 
-public class ProgrammingTarnished_Refranys {
+public class ProjecteUF2_ProgrammingTarnished {
     private static final int NR_REFRANYS = 5;
     private static final int NR_JUGADORS = 2;
     private static final int NR_REFRANYS_TOTALS = 15;
@@ -432,6 +432,6 @@ public class ProgrammingTarnished_Refranys {
     }
 
     public static void main(String[] args) {
-        new ProgrammingTarnished_Refranys().iniciarJoc();
+        new ProjecteUF2_ProgrammingTarnished().iniciarJoc();
     }
 }
